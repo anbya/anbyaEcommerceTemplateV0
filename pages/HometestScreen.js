@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from  'react-redux'
 import { Text , View , AsyncStorage , ScrollView } from 'react-native'
-// import {NavigationEvents} from '@react-navigation/native'
+import Constants from 'expo-constants'
+
 import {
   Icon,
   Container,
@@ -32,7 +33,7 @@ class HomeScreen extends React.Component {
   };
   render() {
     return (
-      <Container>
+      <Container style={{paddingTop: Constants.statusBarHeight}}>
         <Grid>
         {/* <NavigationEvents onDidFocus={() => this.refreshPage()} /> */}
           <Row size={1}>
@@ -49,9 +50,12 @@ class HomeScreen extends React.Component {
                   </Col>
                   <Col size={1}>
                     <View style={{ flex: 1, justifyContent: "center",alignItems:"center"}}>
-                      <Button transparent onPress={() => alert("it's work")}>
+                      <Button transparent onPress={() => this.props.navigation.push("Details", { name: "React Native by Example " })}>
                         <Ionicons name={"md-heart"} size={25} color={"#019cde"} />
                       </Button>
+                      {/* <Button transparent onPress={() => alert("it's work")}>
+                        <Ionicons name={"md-heart"} size={25} color={"#019cde"} />
+                      </Button> */}
                     </View>
                   </Col>
                   <Col size={1}>

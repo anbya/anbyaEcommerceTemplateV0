@@ -3,10 +3,13 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { Button } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
+import { Button, StatusBar } from 'react-native';
 import HometestScreen from '../pages/HometestScreen';
 import { Provider } from "react-redux";
 import store from "../redux/store";
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { AuthContext } from "./context";
 import {
@@ -68,7 +71,7 @@ const HomeStackScreen = () => (
 
 const SearchStackScreen = () => (
   <SearchStack.Navigator>
-    <SearchStack.Screen name="Search" component={Search} />
+    <SearchStack.Screen name="Account" component={Search} />
     <SearchStack.Screen name="Search2" component={Search2} />
   </SearchStack.Navigator>
 );
@@ -81,9 +84,32 @@ const ProfileStackScreen = () => (
 );
 
 const TabsScreen = () => (
-  <Tabs.Navigator>
-    <Tabs.Screen name="Home" component={HomeStackScreen} />
-    <Tabs.Screen name="Search" component={SearchStackScreen} />
+  <Tabs.Navigator
+    initialRouteName="Home"
+    tabBarOptions={{
+      activeTintColor: '#019cde',
+    }}
+  >
+    <Tabs.Screen
+      name="Home"
+      component={HomeStackScreen}
+      options={{
+        tabBarLabel: 'Home',
+        tabBarIcon: ({ color, size }) => (
+          <MaterialCommunityIcons name="home" color={color} size={size} />
+        ),
+      }}
+    />
+    <Tabs.Screen
+      name="Account"
+      component={SearchStackScreen}
+      options={{
+        tabBarLabel: 'Account',
+        tabBarIcon: ({ color, size }) => (
+          <MaterialCommunityIcons name="account" color={color} size={size} />
+        ),
+      }}
+    />
   </Tabs.Navigator>
 );
 
@@ -121,7 +147,9 @@ const RootStackScreen = ({ userToken }) => (
 export default () => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [userToken, setUserToken] = React.useState(null);
-
+  // StatusBar.setBackgroundColor(
+  //   `rgba(${0}, ${0}, ${0}, ${0})`
+  // );
   const authContext = React.useMemo(() => {
     return {
       signIn: () => {
