@@ -3,13 +3,17 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
-
 import { Button, StatusBar } from 'react-native';
-import HometestScreen from '../pages/HometestScreen';
 import { Provider } from "react-redux";
 import store from "../redux/store";
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
+
+import HometestScreen from '../pages/HometestScreen';
+import HomeAuth from './home';
+import Signpage from './signInScreen';
 
 import { AuthContext } from "./context";
 import {
@@ -28,7 +32,7 @@ const AuthStackScreen = () => (
   <AuthStack.Navigator>
     <AuthStack.Screen
       name="SignIn"
-      component={SignIn}
+      component={Signpage}
       options={{ title: "Sign In" }}
     />
     <AuthStack.Screen
@@ -125,15 +129,7 @@ const DrawerScreen = () => (
 const RootStack = createStackNavigator();
 const RootStackScreen = ({ userToken }) => (
   <RootStack.Navigator headerMode="none">
-    {userToken ? (
-      <RootStack.Screen
-        name="App"
-        component={HomeStackScreen}
-        options={{
-          animationEnabled: false
-        }}
-      />
-    ) : (
+    {userToken !==null || userToken === undefined  ? (
       <RootStack.Screen
         name="Auth"
         component={AuthStackScreen}
@@ -141,10 +137,17 @@ const RootStackScreen = ({ userToken }) => (
           animationEnabled: false
         }}
       />
+    ) : (
+      <RootStack.Screen
+        name="App"
+        component={HomeStackScreen}
+        options={{
+          animationEnabled: false
+        }}
+      />
     )}
   </RootStack.Navigator>
 );
-
 export default () => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [userToken, setUserToken] = React.useState(null);
@@ -164,15 +167,20 @@ export default () => {
       signOut: () => {
         setIsLoading(false);
         setUserToken(null);
+        AsyncStorage.clear();
       }
     };
   }, []);
-
+  console.log(userToken);
   React.useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
+    const getData = async () => {
+      const value = await AsyncStorage.getItem('userToken')
+      return value
+    }
+    setIsLoading(false);
+    setUserToken(getData);
   }, []);
+
 
   if (isLoading) {
     return <Splash />;
@@ -180,11 +188,12 @@ export default () => {
 
   return (
     <Provider store={store}>
-      <AuthContext.Provider value={authContext}>
+      <HomeAuth />
+      {/* <AuthContext.Provider value={authContext}>
         <NavigationContainer>
           <RootStackScreen userToken={userToken} />
         </NavigationContainer>
-      </AuthContext.Provider>
+      </AuthContext.Provider> */}
     </Provider>
   );
 };

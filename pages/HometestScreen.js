@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from  'react-redux'
-import { Text , View , AsyncStorage , ScrollView } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Text , View , ScrollView } from 'react-native'
 import Constants from 'expo-constants'
 
 import {
@@ -22,10 +23,16 @@ import Cardlist from './Cardlist'
 import CardlistSatu from './CardlistSatu'
 import CardlistDua from './CardlistDua'
 import Personalcard from './Personalcard'
+import {_retrieveData, _storeData} from '../App/localStorage'
 
 //import all the basic component we have used
 class HomeScreen extends React.Component {
   
+  // componentDidMount() {
+  //   _retrieveData('userToken').then((user)=>{
+  //   console.log(user);
+  //   });
+  // }
   refreshPage = async () => {
     const userToken = await AsyncStorage.getItem('userToken');
     const tokenParsing = JSON.parse(userToken);

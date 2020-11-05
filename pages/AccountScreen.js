@@ -9,8 +9,9 @@ import { material } from 'react-native-typography'
 //import all the basic component we have used
 class AccountScreen extends React.Component {
   _signOutAsync = async () => {
+    let payloadData="";
     await AsyncStorage.clear();
-    this.props.navigation.navigate('Auth');
+    this.props.dispatch({ type: "USER_INFO", payload: payloadData });
   };
   render() {
     return (

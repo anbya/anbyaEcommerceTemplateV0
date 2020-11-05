@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import axios from "axios";
 
 const initialState = {
-  userinfo: []
+  userinfo: "asd"
 };
 
 
