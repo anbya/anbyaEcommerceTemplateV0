@@ -103,7 +103,7 @@ export const Profile = ({ navigation }) => {
 
 export const Splash = () => (
   <ScreenContainer>
-    <Text>Loading...</Text>
+    <Text>Loading......</Text>
   </ScreenContainer>
 );
 

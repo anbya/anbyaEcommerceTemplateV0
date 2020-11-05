@@ -1,15 +1,14 @@
 {
   "expo": {
-    "name": "React Nav v5",
+    "name": "anbyaEcommercev001",
     "slug": "anbyaEcommercev001",
     "privacy": "public",
-    "sdkVersion": "36.0.0",
     "platforms": [
       "ios",
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -29,7 +28,7 @@
     },
     "android": {
       "package": "com.anbyaEcommercev001.anbyaEcommercev001",
-      "versionCode": 1
+      "versionCode": 2
     }
   }
 }
