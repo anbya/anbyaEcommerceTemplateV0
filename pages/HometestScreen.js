@@ -23,7 +23,7 @@ import Cardlist from './Cardlist'
 import CardlistSatu from './CardlistSatu'
 import CardlistDua from './CardlistDua'
 import Personalcard from './Personalcard'
-import {_retrieveData, _storeData} from '../App/localStorage'
+// import {_retrieveData, _storeData} from '../App/localStorage'
 
 //import all the basic component we have used
 class HomeScreen extends React.Component {
@@ -33,11 +33,11 @@ class HomeScreen extends React.Component {
   //   console.log(user);
   //   });
   // }
-  refreshPage = async () => {
-    const userToken = await AsyncStorage.getItem('userToken');
-    const tokenParsing = JSON.parse(userToken);
-    this.props.dispatch({ type: "USER_INFO", payload: tokenParsing });
-  };
+  // refreshPage = async () => {
+  //   const userToken = await AsyncStorage.getItem('userToken');
+  //   const tokenParsing = JSON.parse(userToken);
+  //   this.props.dispatch({ type: "USER_INFO", payload: tokenParsing });
+  // };
   render() {
     return (
       <Container style={{paddingTop: Constants.statusBarHeight}}>
@@ -185,10 +185,13 @@ class HomeScreen extends React.Component {
 }
 
 
-const mapStateToProps = state => {
-  return {
-    userinfo: state.reducer.userinfo
-  };
-};
+// const mapStateToProps = state => {
+//   return {
+//     userinfo: state.reducer.userinfo
+//   };
+// };
 
-export default connect(mapStateToProps)(HomeScreen);
+// export default connect(mapStateToProps)(HomeScreen);
+
+
+export default HomeScreen;

@@ -16,5 +16,12 @@ const _retrieveData = async (key) => {
     console.log(error);
   }
 }
+const _clearData = async () => {
+  try {
+    await AsyncStorage.clear();
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-export {_storeData, _retrieveData};
+export {_storeData, _retrieveData,_clearData};

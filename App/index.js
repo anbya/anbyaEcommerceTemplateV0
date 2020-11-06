@@ -32,7 +32,7 @@ const AuthStackScreen = () => (
   <AuthStack.Navigator>
     <AuthStack.Screen
       name="SignIn"
-      component={Signpage}
+      component={SignIn}
       options={{ title: "Sign In" }}
     />
     <AuthStack.Screen
@@ -82,6 +82,12 @@ const HomeStackScreen = () => (
 );
 
 
+const SearchStackScreen = () => (
+  <SearchStack.Navigator>
+    <SearchStack.Screen name="Search" component={Search} />
+    <SearchStack.Screen name="Search2" component={Search2} />
+  </SearchStack.Navigator>
+);
 const ProfileStackScreen = () => (
   <ProfileStack.Navigator>
     <ProfileStack.Screen name="Profile" component={Profile} />
@@ -107,7 +113,7 @@ const TabsScreen = () => (
     />
     <Tabs.Screen
       name="Account"
-      component={Search}
+      component={SearchStackScreen}
       options={{
         tabBarLabel: 'Account',
         tabBarIcon: ({ color, size }) => (
@@ -129,18 +135,18 @@ const DrawerScreen = () => (
 const RootStack = createStackNavigator();
 const RootStackScreen = ({ userToken }) => (
   <RootStack.Navigator headerMode="none">
-    {userToken !==null || userToken === undefined  ? (
+    {userToken ? (
       <RootStack.Screen
-        name="Auth"
-        component={AuthStackScreen}
+        name="App"
+        component={HomeStackScreen}
         options={{
           animationEnabled: false
         }}
       />
     ) : (
       <RootStack.Screen
-        name="App"
-        component={HomeStackScreen}
+        name="Auth"
+        component={AuthStackScreen}
         options={{
           animationEnabled: false
         }}
@@ -151,9 +157,7 @@ const RootStackScreen = ({ userToken }) => (
 export default () => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [userToken, setUserToken] = React.useState(null);
-  // StatusBar.setBackgroundColor(
-  //   `rgba(${0}, ${0}, ${0}, ${0})`
-  // );
+
   const authContext = React.useMemo(() => {
     return {
       signIn: () => {
@@ -167,20 +171,15 @@ export default () => {
       signOut: () => {
         setIsLoading(false);
         setUserToken(null);
-        AsyncStorage.clear();
       }
     };
   }, []);
-  console.log(userToken);
-  React.useEffect(() => {
-    const getData = async () => {
-      const value = await AsyncStorage.getItem('userToken')
-      return value
-    }
-    setIsLoading(false);
-    setUserToken(getData);
-  }, []);
 
+  React.useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
 
   if (isLoading) {
     return <Splash />;

@@ -7,48 +7,57 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { HomeStackScreen } from "./homeStack";
 import { AuthStackScreen } from "./authStack";
-import { AuthContext } from "./context";
-const RootStack = createStackNavigator();
-const HomeAuth = () => {
-  const [userToken, setUserToken] = React.useState(null);
-  const authContext = React.useMemo(() => {
-    return {
-      signIn: () => {
-        setUserToken("asdf");
-      },
-      signUp: () => {
-        setUserToken("asdf");
-      },
-      signOut: () => {
-        setUserToken(null);
-      }
+import {_retrieveData, _storeData,_clearData} from './localStorage'
+
+class home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userToken:""
     };
-  }, []);
-  return (
-  <AuthContext.Provider value={authContext}>
-    <NavigationContainer>
-        <RootStack.Navigator headerMode="none">
-          {/* {this.state.userToken=== null || this.state.userToken === undefined || this.state.userToken === "" ? ( */}
-          {userToken === null ? (
-            <RootStack.Screen
-              name="Auth"
-              component={AuthStackScreen}
-              options={{
-                animationEnabled: false
-              }}
-            />
-          ) : (
-            <RootStack.Screen
-              name="App"
-              component={HomeStackScreen}
-              options={{
-                animationEnabled: false
-              }}
-            />
-          )}
-        </RootStack.Navigator>
-    </NavigationContainer>
-  </AuthContext.Provider>
-  )
+  }
+    componentDidMount() {
+      _retrieveData('userToken').then((user)=>{
+        this.props.dispatch({ type: "USER_INFO", payload: user });
+      });
+    }
+    componentDidUpdate() {
+      _retrieveData('userToken').then((user)=>{
+        this.props.dispatch({ type: "USER_INFO", payload: user });
+      });
+    }
+    render() {
+      const RootStack = createStackNavigator();
+        return (
+          <NavigationContainer>
+              <RootStack.Navigator headerMode="none">
+                {this.props.userinfo=== null || this.props.userinfo === undefined || this.props.userinfo === "" ? (
+                  <RootStack.Screen
+                    name="Auth"
+                    component={AuthStackScreen}
+                    options={{
+                      animationEnabled: false
+                    }}
+                  />
+                ) : (
+                  <RootStack.Screen
+                    name="App"
+                    component={HomeStackScreen}
+                    options={{
+                      animationEnabled: false
+                    }}
+                  />
+                )}
+              </RootStack.Navigator>
+          </NavigationContainer>
+        );
+    }
+}
+
+const mapStateToProps = state => {
+  return {
+    userinfo: state.reducer.userinfo
+  };
 };
-export default HomeAuth
+
+export default connect(mapStateToProps)(home);

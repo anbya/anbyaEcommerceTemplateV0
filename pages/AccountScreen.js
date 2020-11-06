@@ -1,17 +1,20 @@
 import React from 'react'
 import { connect } from  'react-redux'
-import { Text , View , AsyncStorage } from 'react-native'
+import { Text , View } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   Button
 } from "native-base";
 import { material } from 'react-native-typography'
+import {_retrieveData, _storeData,_clearData} from '../App/localStorage'
 
 //import all the basic component we have used
 class AccountScreen extends React.Component {
-  _signOutAsync = async () => {
-    let payloadData="";
-    await AsyncStorage.clear();
-    this.props.dispatch({ type: "USER_INFO", payload: payloadData });
+  _signOutAsync = () => {
+    _clearData().then(()=>{
+      let payloadData="";
+      this.props.dispatch({ type: "USER_INFO", payload: payloadData });
+    });
   };
   render() {
     return (
