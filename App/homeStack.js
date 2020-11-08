@@ -2,8 +2,12 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Button } from 'react-native';
 import HometestScreen from '../pages/HometestScreen';
 import AccountScreen from '../pages/AccountScreen';
+import Whislist from '../pages/whislist';
+import Mail from '../pages/mail';
+import Notification from '../pages/notification';
 import {
     SignIn,
     CreateAccount,
@@ -55,8 +59,36 @@ export const HomeStackScreen = () => (
         }}
       />
       <HomeStack.Screen
-        name="Details"
-        component={Details}
+        name="whislist"
+        component={Whislist}
+        options={({ route }) => ({
+          title: route.params.name,
+          headerRight: () => (
+            <Button
+              onPress={() => alert('This is a button!')}
+              title="Info"
+              color="#fff"
+            />
+          )
+        })}
+      />
+      <HomeStack.Screen
+        name="mail"
+        component={Mail}
+        options={({ route }) => ({
+          title: route.params.name,
+          headerRight: () => (
+            <Button
+              onPress={() => alert('This is a button!')}
+              title="Info"
+              color="#fff"
+            />
+          )
+        })}
+      />
+      <HomeStack.Screen
+        name="notification"
+        component={Notification}
         options={({ route }) => ({
           title: route.params.name,
           headerRight: () => (

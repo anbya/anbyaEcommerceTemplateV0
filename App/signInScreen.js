@@ -5,6 +5,8 @@ import {
   View,
   Button,
   Text,
+  Image,
+  Dimensions,
 } from 'react-native';
 import { Content , Form, Item, Input, Label } from 'native-base';
 import {
@@ -40,37 +42,63 @@ class SignInScreen extends Component {
     });
   }
   render() {
+    const lebar = Dimensions.get("window").width / 3
+    const testLebar = 50
     return (
-      <View style={{flex:1}}>
+      <View style={{flex:1,justifyContent:"center"}}>
         <View style={{display:this.state.loadingView}}>
           <BarIndicator color='#019cde' />
         </View>
-        <Content style={{paddingLeft:25,paddingRight:25}}>
-          <Form>
-            <Item floatingLabel>
-            <Label>Email</Label>
-            <Input
-            type="text"
-            name="EMAIL"
-            onChangeText={(text) => this.setState({ EMAIL:text})}
-            required
-            />
-            </Item>
-            <Item floatingLabel last style={{marginBottom:20}}>
-            <Label>Password</Label>
-            <Input
-            type="text"
-            name="PASS"
-            onChangeText={(text) => this.setState({ PASS:text})}
-            secureTextEntry={true}
-            required
-            />
-            </Item>
-            <Button title="Sign in" onPress={() => this.handleSubmit()}/>
-            <Text style={{textAlign:'center'}}>OR</Text>
-            <Button title="Sign up" onPress={() => this.props.navigation.push('SignUp')}/>
-          </Form>
-        </Content>
+        <View>
+          <Image source={{uri: `http://anbyafile.jaygeegroupapp.com/assets/img/shop.png`}} style={{height: 100, width: 100,alignSelf:"center"}}/>
+        </View>
+        <View style={{paddingLeft:25,paddingRight:25}}>
+          <View>
+            <Text style={{color:"#000000",fontSize:20,fontWeight:"bold",textAlign:"center",paddingTop:5,paddingBottom:5}}>Wellcome to TRANSLAPAK</Text>
+            <Text style={{color:"#858585",fontSize:15,textAlign:"center",paddingTop:5,paddingBottom:5}}>Sign in to continue</Text>
+              <Form>
+                <Item floatingLabel>
+                <Label>Email</Label>
+                <Input
+                type="text"
+                name="EMAIL"
+                onChangeText={(text) => this.setState({ EMAIL:text})}
+                required
+                />
+                </Item>
+                <Item floatingLabel last style={{marginBottom:20}}>
+                <Label>Password</Label>
+                <Input
+                type="text"
+                name="PASS"
+                onChangeText={(text) => this.setState({ PASS:text})}
+                secureTextEntry={true}
+                required
+                />
+                </Item>
+                <Button
+                  color="#019cde"
+                  title="Sign in"
+                  onPress={() => this.handleSubmit()}
+                />
+                {/* <View style={{paddingTop:5,paddingBottom:5}}>
+                  <Button title="Sign in" onPress={() => this.handleSubmit()}/>
+                </View> */}
+                <Text style={{color:"#019cde",fontSize:15,fontWeight:"bold",textAlign:"center",paddingTop:15,paddingBottom:15}}>Forgot password ?</Text>
+                <View style={{paddingTop:5,paddingBottom:5}}>
+                  <Text style={{textAlign:"center"}}>
+                    <Text style={{color:"#858585",fontSize:15}}>Don't have an account? </Text>
+                    <Text
+                    style={{color:"#019cde",fontSize:15,fontWeight:"bold"}}
+                    onPress={() => this.props.navigation.push("CreateAccount")}
+                    >
+                      Register
+                    </Text>
+                  </Text>
+                </View>
+              </Form>
+          </View>
+        </View>
       </View>
     );
   }

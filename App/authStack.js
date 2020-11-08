@@ -9,12 +9,16 @@ export const AuthStackScreen = () => (
       <AuthStack.Screen
         name="SignIn"
         component={SignInScreen}
-        options={{ title: "Sign In" }}
+        options={{ 
+          headerShown: false
+        }}
       />
       <AuthStack.Screen
         name="CreateAccount"
         component={Signuppage}
-        options={{ title: "Create Account" }}
+        options={{ 
+          headerShown: false
+        }}
       />
     </AuthStack.Navigator>
   );

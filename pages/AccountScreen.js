@@ -12,8 +12,8 @@ import {_retrieveData, _storeData,_clearData} from '../App/localStorage'
 class AccountScreen extends React.Component {
   _signOutAsync = () => {
     _clearData().then(()=>{
-      let payloadData="";
-      this.props.dispatch({ type: "USER_INFO", payload: payloadData });
+      this.props.dispatch({ type: "HOME_STATE", payload: true });
+      this.props.dispatch({ type: "USER_INFO", payload: null });
     });
   };
   render() {

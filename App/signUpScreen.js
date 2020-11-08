@@ -1,23 +1,28 @@
 import React, { Component } from 'react';
+import { connect } from  'react-redux'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   View,
   Button,
-  Image
+  Text,
+  Image,
+  Dimensions,
 } from 'react-native';
-import { Container, Content, Tab, Tabs, Form, Item, Input, Label  } from 'native-base';
-import { Row, Grid } from "react-native-easy-grid";
+import { Content , Form, Item, Input, Label } from 'native-base';
 import {
-  BarIndicator
+  BarIndicator,
 } from 'react-native-indicators';
+import { AuthContext } from "./context";
+import {_retrieveData, _storeData,_clearData} from './localStorage'
 
-class SignupScreen extends Component {
+
+class SignInScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      USERNAME: "",
+      FULLNAME: "",
       EMAIL: "",
       PASS: "",
-      TELP: "",
       mainView:"flex",
       loadingView:"none"
     };
@@ -28,77 +33,97 @@ class SignupScreen extends Component {
       loadingView:"none"
     });
   };
-  handleSubmit = () => {
-    alert(`Sign up berhasil`);
-    this.hideLoading();
-    this.props.navigation.navigate('SignIn')
+  handleSubmit = async () => {
+    _storeData('userToken',this.state.EMAIL).then(()=>{
+      this.setState({
+        mainView:"none",
+        loadingView:"flex"
+      });
+      this.props.dispatch({ type: "USER_INFO", payload: this.state.EMAIL });
+    });
   }
   render() {
+    const lebar = Dimensions.get("window").width / 3
+    const testLebar = 50
     return (
-      <Container>
-        <Tabs>
-          <Tab heading="Sign up" tabStyle={{backgroundColor: '#019cde'}} textStyle={{color: '#fff'}} activeTabStyle={{backgroundColor: '#019cde'}} activeTextStyle={{color: '#fff', fontWeight: 'bold'}}>
-            <Grid>
-              <Row>
-                <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-                  <View style={{display:this.state.loadingView}}>
-                    <BarIndicator color='#019cde' />
-                  </View>
-                  <Content style={{width:'80%',display:this.state.mainView}}>
-                    <Form>
-                    <Item floatingLabel>
-                      <Label>Username</Label>
-                      <Input
-                      type="text"
-                      name="USERNAME"
-                      onChangeText={(text) => this.setState({ USERNAME:text})}
-                      required
-                      />
-                    </Item>
-                    <Item floatingLabel>
-                      <Label>Email</Label>
-                      <Input
-                      type="text"
-                      name="EMAIL"
-                      onChangeText={(text) => this.setState({ EMAIL:text})}
-                      required
-                      />
-                    </Item>
-                    <Item floatingLabel>
-                      <Label>No Telephone</Label>
-                      <Input
-                      type="text"
-                      name="TELP"
-                      onChangeText={(text) => this.setState({ TELP:text})}
-                      required
-                      />
-                    </Item>
-                    <Item floatingLabel last style={{marginBottom:20}}>
-                      <Label>Password</Label>
-                      <Input
-                      type="text"
-                      name="PASS"
-                      onChangeText={(text) => this.setState({ PASS:text})}
-                      secureTextEntry={true}
-                      required
-                      />
-                    </Item>
-                    <Button title="Sign up" onPress={() => this.handleSubmit()}/>
-                    </Form>
-                  </Content>
+      <View style={{flex:1,justifyContent:"center"}}>
+        <View style={{display:this.state.loadingView}}>
+          <BarIndicator color='#019cde' />
+        </View>
+        <View>
+          <Image source={{uri: `http://anbyafile.jaygeegroupapp.com/assets/img/shop.png`}} style={{height: 100, width: 100,alignSelf:"center"}}/>
+        </View>
+        <View style={{paddingLeft:25,paddingRight:25}}>
+          <View>
+            <Text style={{color:"#000000",fontSize:20,fontWeight:"bold",textAlign:"center",paddingTop:5,paddingBottom:5}}>Let's Get Started</Text>
+            <Text style={{color:"#858585",fontSize:15,textAlign:"center",paddingTop:5,paddingBottom:5}}>Create a new account</Text>
+              <Form>
+                <Item floatingLabel>
+                <Label>Full Name</Label>
+                <Input
+                type="text"
+                name="FULLNAME"
+                onChangeText={(text) => this.setState({ FULLNAME:text})}
+                required
+                />
+                </Item>
+                <Item floatingLabel>
+                <Label>Email</Label>
+                <Input
+                type="text"
+                name="EMAIL"
+                onChangeText={(text) => this.setState({ EMAIL:text})}
+                required
+                />
+                </Item>
+                <Item floatingLabel>
+                <Label>Password</Label>
+                <Input
+                type="text"
+                name="PASS"
+                onChangeText={(text) => this.setState({ PASS:text})}
+                secureTextEntry={true}
+                required
+                />
+                </Item>
+                <Item floatingLabel last style={{marginBottom:20}}>
+                <Label>Repeat Password</Label>
+                <Input
+                type="text"
+                name="PASS"
+                onChangeText={(text) => this.setState({ PASS:text})}
+                secureTextEntry={true}
+                required
+                />
+                </Item>
+                <Button
+                  color="#019cde"
+                  title="Register"
+                  onPress={() => this.handleSubmit()}
+                />
+                <View style={{paddingTop:5,paddingBottom:5}}>
+                  <Text style={{textAlign:"center"}}>
+                    <Text style={{color:"#858585",fontSize:15}}>Have an account? </Text>
+                    <Text
+                    style={{color:"#019cde",fontSize:15,fontWeight:"bold"}}
+                    onPress={() => this.props.navigation.push("SignIn")}
+                    >
+                      Sign In
+                    </Text>
+                  </Text>
                 </View>
-              </Row>
-            </Grid>
-          </Tab>
-        </Tabs>
-      </Container>
+              </Form>
+          </View>
+        </View>
+      </View>
     );
   }
 }
 
-SignupScreen.navigationOptions = {
-  title: "Back",
-  headerStyle: { backgroundColor: "#019cde" },
-  headerTitleStyle: { color: "white" }
+const mapStateToProps = state => {
+  return {
+    userinfo: state.reducer.userinfo
+  };
 };
-export default SignupScreen;
+
+export default connect(mapStateToProps)(SignInScreen);

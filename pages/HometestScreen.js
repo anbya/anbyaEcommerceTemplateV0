@@ -57,7 +57,7 @@ class HomeScreen extends React.Component {
                   </Col>
                   <Col size={1}>
                     <View style={{ flex: 1, justifyContent: "center",alignItems:"center"}}>
-                      <Button transparent onPress={() => this.props.navigation.push("Details", { name: "React Native by Example " })}>
+                      <Button transparent onPress={() => this.props.navigation.push("whislist", { name: "Whistlist " })}>
                         <Ionicons name={"md-heart"} size={25} color={"#019cde"} />
                       </Button>
                       {/* <Button transparent onPress={() => alert("it's work")}>
@@ -67,14 +67,14 @@ class HomeScreen extends React.Component {
                   </Col>
                   <Col size={1}>
                     <View style={{ flex: 1, justifyContent: "center",alignItems:"center"}}>
-                      <Button transparent onPress={() => alert("it's work")}>
+                      <Button transparent onPress={() => this.props.navigation.push("mail", { name: "Mail " })}>
                         <Ionicons name={"md-mail"} size={25} color={"#019cde"} />
                       </Button>
                     </View>
                   </Col>
                   <Col size={1}>
                     <View style={{ flex: 1, justifyContent: "center",alignItems:"center"}}>
-                      <Button transparent onPress={() => alert("it's work")}>
+                      <Button transparent onPress={() => this.props.navigation.push("notification", { name: "Notification " })}>
                         <FontAwesome name={"bell"} size={25} color={"#019cde"} />
                       </Button>
                     </View>
