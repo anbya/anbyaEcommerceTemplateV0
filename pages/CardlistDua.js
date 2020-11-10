@@ -18,6 +18,7 @@ class Cardlistdua extends React.Component {
       };
   }
   render() {
+      console.log(this.props);
       const lebar = Dimensions.get("window").width / 3
       const testLebar = 50
     return (

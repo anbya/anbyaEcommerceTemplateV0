@@ -38,6 +38,7 @@ class HomeScreen extends React.Component {
   //   this.props.dispatch({ type: "USER_INFO", payload: tokenParsing });
   // };
   render() {
+    console.log(this.props);
     return (
       <Container style={{paddingTop: Constants.statusBarHeight}}>
         <Grid>
@@ -138,7 +139,7 @@ class HomeScreen extends React.Component {
                 </Row>
                 <Row style={{padding:5}}>
                   <Col>
-                    <CardlistSatu />
+                    <CardlistSatu navigation={this.props.navigation} />
                   </Col>
                 </Row>
                 <Row>
@@ -166,7 +167,7 @@ class HomeScreen extends React.Component {
                 </Row>
                 <Row style={{padding:5}}>
                   <Col>
-                    <CardlistDua />
+                    <CardlistDua navigation={this.props.navigation} />
                   </Col>
                 </Row>
               </ScrollView>

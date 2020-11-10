@@ -126,13 +126,6 @@ export const HomeStackScreen = () => (
         })}
       />
       <HomeStack.Screen
-        name="Search2"
-        component={Search2}
-        options={{ 
-          headerShown: false
-        }}
-      />
-      <HomeStack.Screen
         name="detailCard"
         component={DetailCard}
         options={({ route }) => ({
@@ -145,6 +138,13 @@ export const HomeStackScreen = () => (
             />
           )
         })}
+      />
+      <HomeStack.Screen
+        name="Search2"
+        component={Search2}
+        options={{ 
+          headerShown: false
+        }}
       />
     </HomeStack.Navigator>
 );
