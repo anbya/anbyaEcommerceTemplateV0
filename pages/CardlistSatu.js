@@ -1,7 +1,7 @@
 //This is an example code for Bottom Navigation//
 import React from 'react';
 //import react in our code.
-import { Text , View , ScrollView , StyleSheet , Image , Dimensions } from 'react-native'
+import { Text , View , ScrollView , StyleSheet, TouchableOpacity , Image , Dimensions } from 'react-native'
 import { material } from 'react-native-typography'
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
@@ -24,6 +24,7 @@ class Cardlistsatu extends React.Component {
         <ScrollView style={{flex:1, flexDirection:'row'}} horizontal={true} showsHorizontalScrollIndicator={false}>
             {this.state.artikelData.length > 0 && this.state.artikelData.map((artikeldata,index) =>
                 <View style={{padding:2}} key={index}>
+                <TouchableOpacity onPress={() => this.props.navigation.push("detailCard", { name: "detailCard " })}>
                     <Card style={{width:lebar}}>
                     <CardItem cardBody>
                         <Image source={{uri: `http://anbyafile.jaygeegroupapp.com/assets/img/detailbg.jpg`}} style={{height: lebar, width: null, flex: 1}}/>
@@ -47,6 +48,7 @@ class Cardlistsatu extends React.Component {
                         </View>
                     </CardItem>
                     </Card>
+                </TouchableOpacity>
                 </View>
             )}
         </ScrollView>
@@ -66,4 +68,4 @@ const styles = StyleSheet.create({
       paddingBottom:10
     }
 })
-export default (Cardlistsatu);
+export default Cardlistsatu;

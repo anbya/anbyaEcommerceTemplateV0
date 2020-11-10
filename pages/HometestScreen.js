@@ -3,7 +3,6 @@ import { connect } from  'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Text , View , ScrollView } from 'react-native'
 import Constants from 'expo-constants'
-
 import {
   Icon,
   Container,
@@ -98,6 +97,24 @@ class HomeScreen extends React.Component {
                 </Row>
                 <Row style={{padding:5}}>
                   <Col>
+                    <Row>
+                      <Col size={7} style={{paddingLeft:10,paddingTop:1,paddingBottom:5,paddingRight:10}}>
+                        <View style={{ flex: 1, justifyContent: "center",alignItems:"flex-start"}}>
+                          <Text style={{color:"#000000",fontSize:20,fontWeight:"bold"}}>Kategori</Text>
+                        </View>
+                      </Col>
+                      <Col size={3} style={{paddingLeft:10,paddingTop:1,paddingBottom:5,paddingRight:10}}>
+                        <View style={{ flex: 1, justifyContent: "center",alignItems:"center"}}>
+                          <Button transparent onPress={() => alert("it's work")}>
+                            <Text style={{color:"#019cde",fontSize:15}}>Lihat semua</Text>
+                          </Button>
+                        </View>
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+                <Row style={{padding:5}}>
+                  <Col>
                     <Itemlist />
                   </Col>
                 </Row>
@@ -127,29 +144,6 @@ class HomeScreen extends React.Component {
                 <Row>
                   <Col>
                     <CarouselScreen />
-                  </Col>
-                </Row>
-                <Row style={{padding:5}}>
-                  <Col>
-                    <Row>
-                      <Col size={7} style={{paddingLeft:10,paddingTop:1,paddingBottom:5,paddingRight:10}}>
-                        <View style={{ flex: 1, justifyContent: "center",alignItems:"flex-start"}}>
-                          <Text style={{color:"#000000",fontSize:20,fontWeight:"bold"}}>Kategori</Text>
-                        </View>
-                      </Col>
-                      <Col size={3} style={{paddingLeft:10,paddingTop:1,paddingBottom:5,paddingRight:10}}>
-                        <View style={{ flex: 1, justifyContent: "center",alignItems:"center"}}>
-                          <Button transparent onPress={() => alert("it's work")}>
-                            <Text style={{color:"#019cde",fontSize:15}}>Lihat semua</Text>
-                          </Button>
-                        </View>
-                      </Col>
-                    </Row>
-                  </Col>
-                </Row>
-                <Row style={{padding:5}}>
-                  <Col>
-                    <Kategorilist />
                   </Col>
                 </Row>
                 <Row style={{padding:5}}>

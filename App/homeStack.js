@@ -2,12 +2,17 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Button } from 'react-native';
 import HometestScreen from '../pages/HometestScreen';
 import AccountScreen from '../pages/AccountScreen';
 import Whislist from '../pages/whislist';
 import Mail from '../pages/mail';
 import Notification from '../pages/notification';
+import OfferTab from '../pages/offerTab';
+import CartTab from '../pages/cartTab';
+import DetailCard from '../pages/detailCard';
 import {
     SignIn,
     CreateAccount,
@@ -34,6 +39,26 @@ const TabsScreen = () => (
         tabBarLabel: 'Home',
         tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons name="home" color={color} size={size} />
+        ),
+      }}
+    />
+    <Tabs.Screen
+      name="Offer"
+      component={OfferTab}
+      options={{
+        tabBarLabel: 'Offer',
+        tabBarIcon: ({ color, size }) => (
+          <MaterialIcons name="local-offer" color={color} size={size} />
+        ),
+      }}
+    />
+    <Tabs.Screen
+      name="Cart"
+      component={CartTab}
+      options={{
+        tabBarLabel: 'Cart',
+        tabBarIcon: ({ color, size }) => (
+          <FontAwesome5 name="shopping-cart" color={color} size={size} />
         ),
       }}
     />
@@ -106,6 +131,20 @@ export const HomeStackScreen = () => (
         options={{ 
           headerShown: false
         }}
+      />
+      <HomeStack.Screen
+        name="detailCard"
+        component={DetailCard}
+        options={({ route }) => ({
+          title: route.params.name,
+          headerRight: () => (
+            <Button
+              onPress={() => alert('This is a button!')}
+              title="Info"
+              color="#fff"
+            />
+          )
+        })}
       />
     </HomeStack.Navigator>
 );

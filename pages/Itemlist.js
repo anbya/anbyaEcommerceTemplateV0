@@ -116,10 +116,10 @@ const styles = StyleSheet.create({
       margin:0
     },
     containerButton: {
-        backgroundColor: "transparent",
-        flex:1,
-        justifyContent:'center',
-        alignItems:'center'
-      }
+      backgroundColor: "transparent",
+      flex:1,
+      justifyContent:'center',
+      alignItems:'center'
+    }
 })
 export default (Itemlist);

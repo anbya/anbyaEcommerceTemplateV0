@@ -1,8 +1,9 @@
 //This is an example code for Bottom Navigation//
 import React from 'react';
 //import react in our code.
-import { Text , View , ScrollView , StyleSheet , Image , Dimensions } from 'react-native'
+import { Text , View , ScrollView , StyleSheet, TouchableOpacity , Image , Dimensions } from 'react-native'
 import { material } from 'react-native-typography'
+import { FontAwesome } from '@expo/vector-icons';
 import {
     Card,
     CardItem
@@ -22,22 +23,27 @@ class Cardlistdua extends React.Component {
     return (
         <ScrollView style={{flex:1, flexDirection:'row'}} horizontal={true} showsHorizontalScrollIndicator={false}>
             {this.state.artikelData.length > 0 && this.state.artikelData.map((artikeldata,index) =>
-                <View style={{padding:2}} key={index}>
+                <View style={{padding:2}}>
+                <TouchableOpacity onPress={() => this.props.navigation.push("detailCard", { name: "detailCard " })} key={index}>
                     <Card style={{width:lebar}}>
                     <CardItem cardBody>
                         <Image source={{uri: `http://anbyafile.jaygeegroupapp.com/assets/img/detailbg.jpg`}} style={{height: lebar, width: null, flex: 1}}/>
                         <View style={{position:"absolute",top:2,left:2,flex:1,flexDirection:"row",alignItems:"center"}}>
-                            <MaterialCommunityIcons name={"sale"} size={25} color={"#019cde"} />
-                            <Text style={{color:"#019cde",fontSize:15,fontWeight:"bold"}}>Hot Product</Text>
+                            <View style={{ flex: 1,flexDirection:"row",alignItems:"center"}}>
+                                <FontAwesome name={"star"} size={15} color={"#019cde"} />
+                                <Text style={{color:"#000000",fontSize:15,fontWeight:"bold",marginLeft:5}}>x</Text>
+                            </View>
                         </View>
                     </CardItem>
                     <CardItem cardBody style={{backgroundColor:"#f5f5f5"}}>
                         <View style={{flex: 1,justifyContent: "center",alignItems:"flex-start",padding:2}}>
                             <Text numberOfLines={1} style={{color:"#000000",fontSize:15,fontWeight:"bold"}}>{artikeldata}</Text>
+                            <Text style={{color:"#019cde",fontSize:15,fontWeight:"bold"}}>Rp. xxxx.xxx.xxx</Text>
                             <Text style={{color:"#000000",fontSize:13}}>xxx Terjual</Text>
                         </View>
                     </CardItem>
                     </Card>
+                </TouchableOpacity>
                 </View>
             )}
         </ScrollView>
@@ -57,4 +63,4 @@ const styles = StyleSheet.create({
       paddingBottom:10
     }
 })
-export default (Cardlistdua);
+export default Cardlistdua;

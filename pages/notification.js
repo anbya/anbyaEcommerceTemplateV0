@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from "axios";
 import { connect } from "react-redux";
 import moment from 'moment'
-import { StyleSheet,View} from 'react-native'
+import { StyleSheet,View,ScrollView} from 'react-native'
 import {
   Container,
   Header,
@@ -26,38 +26,47 @@ import {
 } from "native-base";
 import { material } from "react-native-typography";
 import { Col, Row, Grid } from "react-native-easy-grid";
+import dataDummy from "./dummyData";
 
 
 class notofication extends Component {
+  constructor(props) {
+      super(props);
+      this.state = {
+      dataDummy: dataDummy
+      };
+  } 
   render() {
     return (
-        <Content style={{paddingLeft:0}}>
-            <View style={{backgroundColor:"#FFFFFF"}}>
-                <Grid>
-                    <Row style={listStyle.borderBottom}>
-                        <Col size={2}>
-                            <View style={{flex: 1,justifyContent:'center', alignItems:'center',padding:10,borderRadius:20}}>
-                            <Thumbnail square source={{ uri: `http://anbyafile.jaygeegroupapp.com/assets/img/detailbg.jpg` }} />
-                            </View>
-                        </Col>
-                        <Col size={8}>
-                            <View style={{flex: 1,justifyContent:'center', alignItems:'flex-start',padding:10,borderRadius:20}}>
-                            <Text style={material.body2}>Header text component</Text>
-                            <Text note>Text component</Text>
-                            </View>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col size={10}>
-                            <View style={{flex: 1,justifyContent:'center', alignItems:'center',padding:10,borderRadius:20}}>
-                            <Text note>REDEEM FROM</Text>
-                            <Text style={material.body2}>2020-11-01 until 2020-11-05</Text>
-                            </View>
-                        </Col>
-                    </Row>
-                </Grid>
+        <ScrollView style={{paddingLeft:0}}>
+          {this.state.dataDummy.length > 0 && this.state.dataDummy.map((dataDummy,index) =>
+            <View style={{backgroundColor:"#FFFFFF"}} key={index}>
+              <Grid>
+                <Row style={listStyle.borderBottom}>
+                  <Col size={2}>
+                    <View style={{flex: 1,justifyContent:'center', alignItems:'center',padding:10,borderRadius:20}}>
+                      <Thumbnail square source={{ uri: `http://anbyafile.jaygeegroupapp.com/assets/img/detailbg.jpg` }} />
+                    </View>
+                  </Col>
+                  <Col size={8}>
+                    <View style={{flex: 1,justifyContent:'center', alignItems:'flex-start',padding:10,borderRadius:20}}>
+                      <Text style={material.body2}>{dataDummy.title}</Text>
+                      <Text note>{dataDummy.subTitle}</Text>
+                    </View>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col size={10}>
+                    <View style={{flex: 1,justifyContent:'center', alignItems:'center',padding:10,borderRadius:20}}>
+                      <Text note>REDEEM FROM</Text>
+                      <Text style={material.body2}>2020-11-01 until 2020-11-05</Text>
+                    </View>
+                  </Col>
+                </Row>
+              </Grid>
             </View>
-        </Content>
+          )}
+        </ScrollView>
     );
   }
 }

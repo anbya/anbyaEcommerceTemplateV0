@@ -11,14 +11,17 @@ import {_retrieveData, _storeData,_clearData} from './localStorage'
 import {Splash} from "./Screens";
 
 class home extends Component {
-    componentDidMount() {
-      _retrieveData('userToken').then((user)=>{
+    componentDidMount = ()=> {
+      _retrieveData('userToken').then( async (user)=>{
         this.props.dispatch({ type: "USER_INFO", payload: user });
         this.props.dispatch({ type: "HOME_STATE", payload: false });
       });
     }
-    componentDidUpdate() {
-      this.props.dispatch({ type: "HOME_STATE", payload: false });
+    componentDidUpdate = ()=> {
+      _retrieveData('userToken').then( async (user)=>{
+        this.props.dispatch({ type: "USER_INFO", payload: user });
+        this.props.dispatch({ type: "HOME_STATE", payload: false });
+      });
     }
     render() {
       const RootStack = createStackNavigator();
