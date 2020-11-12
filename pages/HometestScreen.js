@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from  'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Text , View , ScrollView } from 'react-native'
+import { Text , View , ScrollView, TouchableOpacity } from 'react-native'
 import Constants from 'expo-constants'
 import {
   Icon,
@@ -49,9 +49,14 @@ class HomeScreen extends React.Component {
                 <Row>
                   <Col size={7}>
                     <View style={{ flex: 1, justifyContent: "center",alignItems:"center",padding:10}}>
-                      <Item style={{backgroundColor:"#ffffff",paddingLeft:10,paddingRight:10}}>
+                      {/* <TouchableOpacity>
                         <Icon name="ios-search" />
                         <Input placeholder="Search" placeholderTextColor={"#019cde"} style={{color:"#019cde"}}/>
+                      </TouchableOpacity> */}
+                      <Item style={{backgroundColor:"#ffffff",paddingLeft:10,paddingRight:10,width:"100%",height:"100%"}} onPress={() => this.props.navigation.push("search", { name: "search " })}>
+                        <Icon name="ios-search" />
+                        <Text style={{color:"#019cde",fontSize:15,textAlign:"center",fontWeight:"bold"}}>Search</Text>
+                        {/* <Input placeholder="Search" placeholderTextColor={"#019cde"} style={{color:"#019cde"}}/> */}
                       </Item>
                     </View>
                   </Col>

@@ -10,6 +10,7 @@ import AccountScreen from '../pages/AccountScreen';
 import Whislist from '../pages/whislist';
 import Mail from '../pages/mail';
 import Notification from '../pages/notification';
+import SearchList from '../pages/searchList';
 import OfferTab from '../pages/offerTab';
 import CartTab from '../pages/cartTab';
 import DetailCard from '../pages/detailCard';
@@ -79,6 +80,13 @@ export const HomeStackScreen = () => (
       <HomeStack.Screen
         name="Home"
         component={TabsScreen}
+        options={{ 
+          headerShown: false
+        }}
+      />
+      <HomeStack.Screen
+        name="search"
+        component={SearchList}
         options={{ 
           headerShown: false
         }}
