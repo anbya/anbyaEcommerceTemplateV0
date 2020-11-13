@@ -35,7 +35,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 
 
-class whislist extends Component {
+class detailCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -437,4 +437,4 @@ const listStyle = StyleSheet.create({
   }
 })
 
-export default whislist;
+export default detailCard;

@@ -33,12 +33,14 @@ class SignInScreen extends Component {
       loadingView:"none"
     });
   };
-  handleSubmit = async () => {
-    _storeData('userToken',this.state.EMAIL).then(()=>{
+  handleSubmit = () => {
+    _storeData('userToken',this.state.EMAIL).then(async()=>{
+      console.log(this.state.EMAIL);
       this.setState({
         mainView:"none",
         loadingView:"flex"
       });
+      await this.props.dispatch({ type: "HOME_STATE", payload: true });
       this.props.dispatch({ type: "USER_INFO", payload: this.state.EMAIL });
     });
   }

@@ -8,7 +8,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { HomeStackScreen } from "./homeStack";
 import { AuthStackScreen } from "./authStack";
 import {_retrieveData, _storeData,_clearData} from './localStorage'
-import {Splash} from "./Screens";
+import Splash from "./splash";
 
 class home extends Component {
     componentDidMount = ()=> {
@@ -26,7 +26,9 @@ class home extends Component {
     render() {
       const RootStack = createStackNavigator();
       if (this.props.homeLoadingState === true) {
-        return <Splash />;
+        return (
+          <Splash />
+        );
       }
       return (
         <NavigationContainer>
