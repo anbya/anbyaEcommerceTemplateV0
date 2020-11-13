@@ -46,6 +46,15 @@ class searchList extends Component {
       searchText: ""
       };
   }
+  componentDidMount=()=>{
+    let searchParam = this.props.route.params.search
+    searchParam != ""&&
+    this.setState({
+      ...this.state,
+      searchText:searchParam,
+      dataShow: true
+    });
+  }
   dataShowHandle = () => {
     this.setState({
       ...this.state,
@@ -93,11 +102,12 @@ class searchList extends Component {
                       <Item style={{backgroundColor:"#ffffff",paddingLeft:10,paddingRight:10}}>
                         <Icon name="ios-search" />
                         <Input
+                          value={this.state.searchText}
                           placeholder="Search"
                           placeholderTextColor={"#019cde"}
                           style={{color:"#019cde"}}
                           onChangeText={(text) => this.setState({ searchText:text,optionalState:""})}
-                          onSubmitEditing={() => this.state.searchText !="" &&this.setState({ dataShow:true,searchText:""})}
+                          onSubmitEditing={() => this.state.searchText !="" &&this.setState({ dataShow:true})}
                         />
                       </Item>
                     </View>
@@ -136,18 +146,18 @@ class searchList extends Component {
                   <Text style={{color:"#019cde",fontSize:15,fontWeight:"bold"}}>{this.state.optionalState}</Text>
                 </View>
               }
-              {this.state.searchText != "" &&
+              {/* {this.state.searchText != "" &&
                 <View style={{display:"flex", justifyContent: "center",alignItems:"center",backgroundColor:"#f5f5f5",padding:10 }}>
                   <Text style={{color:"#019cde",fontSize:15,fontWeight:"bold"}}>you search {this.state.searchText}</Text>
                 </View>
-              }
-              {/* {this.state.dataShow == true &&
+              } */}
+              {this.state.dataShow == true &&
                 <View>
                   <FlatList
                     data={dataDummy}
                     renderItem={({item}) =>
                       <View style={{margin:6}}>
-                      <TouchableOpacity onPress={() => this.props.navigation.push("detailCard", { name: "detailCard " })}>
+                      <TouchableOpacity onPress={() => this.props.navigation.push("detailCard", { name: item.title })}>
                           <Card style={{width:lebar}}>
                           <CardItem cardBody>
                               <Image source={{uri: `http://anbyafile.jaygeegroupapp.com/assets/img/detailbg.jpg`}} style={{height: lebar, width: null, flex: 1}}/>
@@ -177,8 +187,8 @@ class searchList extends Component {
                     }}
                   />
                 </View>
-              } */}
-              {this.state.dataShow == true &&
+              }
+              {/* {this.state.dataShow == true &&
                 <ScrollView style={{backgroundColor:"#FFFFFF"}}>
                   <View style={{width:lebar,flexDirection:"row"}}>
                     {this.state.dataDummy.length > 0 && this.state.dataDummy.map((dataDummy,index) =>
@@ -207,7 +217,7 @@ class searchList extends Component {
                     )}
                   </View>
                 </ScrollView>
-              }
+              } */}
             </Col>
           </Row>
         </Grid>

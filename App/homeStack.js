@@ -90,6 +90,9 @@ export const HomeStackScreen = () => (
         options={{ 
           headerShown: false
         }}
+        options={({ route }) => ({
+          headerShown: false
+        })}
       />
       <HomeStack.Screen
         name="whislist"
@@ -137,14 +140,7 @@ export const HomeStackScreen = () => (
         name="detailCard"
         component={DetailCard}
         options={({ route }) => ({
-          title: route.params.name,
-          headerRight: () => (
-            <Button
-              onPress={() => alert('This is a button!')}
-              title="Info"
-              color="#fff"
-            />
-          )
+          headerShown: false
         })}
       />
       <HomeStack.Screen

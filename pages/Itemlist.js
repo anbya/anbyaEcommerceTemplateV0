@@ -19,13 +19,13 @@ class Itemlist extends React.Component {
         <ScrollView style={{flex:1,flexDirection:'row'}} horizontal={true} showsHorizontalScrollIndicator={false}>
           <View>
             <View style={{padding:10}}>
-              <TouchableOpacity style={[styles.containerButton]} onPress={() => alert("it's work")}>
+              <TouchableOpacity style={[styles.containerButton]} onPress={() => this.props.navigation.push("search", { search: "Item ke 1" })}>
                 <FontAwesome5 name={"archive"} size={30} color={"#019cde"} />
                 <Text style={{color:"#019cde",fontSize:15,textAlign:"center",fontWeight:"bold"}}>Item ke 1</Text>
               </TouchableOpacity>
             </View>
             <View style={{padding:10}}>
-              <TouchableOpacity style={[styles.containerButton]} onPress={() => alert("it's work")}>
+              <TouchableOpacity style={[styles.containerButton]} onPress={() => this.props.navigation.push("search", { search: "Item ke 7" })}>
                 <FontAwesome5 name={"archive"} size={30} color={"#019cde"} />
                 <Text style={{color:"#019cde",fontSize:15,textAlign:"center",fontWeight:"bold"}}>Item ke 7</Text>
               </TouchableOpacity>
@@ -33,13 +33,13 @@ class Itemlist extends React.Component {
           </View>
           <View>
             <View style={{padding:10}}>
-              <TouchableOpacity style={[styles.containerButton]} onPress={() => alert("it's work")}>
+              <TouchableOpacity style={[styles.containerButton]} onPress={() => this.props.navigation.push("search", { search: "Item ke 2" })}>
                 <FontAwesome5 name={"archive"} size={30} color={"#019cde"} />
                 <Text style={{color:"#019cde",fontSize:15,textAlign:"center",fontWeight:"bold"}}>Item ke 2</Text>
               </TouchableOpacity>
             </View>
             <View style={{padding:10}}>
-              <TouchableOpacity style={[styles.containerButton]} onPress={() => alert("it's work")}>
+              <TouchableOpacity style={[styles.containerButton]} onPress={() => this.props.navigation.push("search", { search: "Item ke 8" })}>
                 <FontAwesome5 name={"archive"} size={30} color={"#019cde"} />
                 <Text style={{color:"#019cde",fontSize:15,textAlign:"center",fontWeight:"bold"}}>Item ke 8</Text>
               </TouchableOpacity>
@@ -47,13 +47,13 @@ class Itemlist extends React.Component {
           </View>
           <View>
             <View style={{padding:10}}>
-              <TouchableOpacity style={[styles.containerButton]} onPress={() => alert("it's work")}>
+              <TouchableOpacity style={[styles.containerButton]} onPress={() => this.props.navigation.push("search", { search: "Item ke 3" })}>
                 <FontAwesome5 name={"archive"} size={30} color={"#019cde"} />
                 <Text style={{color:"#019cde",fontSize:15,textAlign:"center",fontWeight:"bold"}}>Item ke 3</Text>
               </TouchableOpacity>
             </View>
             <View style={{padding:10}}>
-              <TouchableOpacity style={[styles.containerButton]} onPress={() => alert("it's work")}>
+              <TouchableOpacity style={[styles.containerButton]} onPress={() => this.props.navigation.push("search", { search: "Item ke 9" })}>
                 <FontAwesome5 name={"archive"} size={30} color={"#019cde"} />
                 <Text style={{color:"#019cde",fontSize:15,textAlign:"center",fontWeight:"bold"}}>Item ke 9</Text>
               </TouchableOpacity>
@@ -61,13 +61,13 @@ class Itemlist extends React.Component {
           </View>
           <View>
             <View style={{padding:10}}>
-              <TouchableOpacity style={[styles.containerButton]} onPress={() => alert("it's work")}>
+              <TouchableOpacity style={[styles.containerButton]} onPress={() => this.props.navigation.push("search", { search: "Item ke 4" })}>
                 <FontAwesome5 name={"archive"} size={30} color={"#019cde"} />
                 <Text style={{color:"#019cde",fontSize:15,textAlign:"center",fontWeight:"bold"}}>Item ke 4</Text>
               </TouchableOpacity>
             </View>
             <View style={{padding:10}}>
-              <TouchableOpacity style={[styles.containerButton]} onPress={() => alert("it's work")}>
+              <TouchableOpacity style={[styles.containerButton]} onPress={() => this.props.navigation.push("search", { search: "Item ke 10" })}>
                 <FontAwesome5 name={"archive"} size={30} color={"#019cde"} />
                 <Text style={{color:"#019cde",fontSize:15,textAlign:"center",fontWeight:"bold"}}>Item ke 10</Text>
               </TouchableOpacity>
@@ -75,13 +75,13 @@ class Itemlist extends React.Component {
           </View>
           <View>
             <View style={{padding:10}}>
-              <TouchableOpacity style={[styles.containerButton]} onPress={() => alert("it's work")}>
+              <TouchableOpacity style={[styles.containerButton]} onPress={() => this.props.navigation.push("search", { search: "Item ke 5" })}>
                 <FontAwesome5 name={"archive"} size={30} color={"#019cde"} />
                 <Text style={{color:"#019cde",fontSize:15,textAlign:"center",fontWeight:"bold"}}>Item ke 5</Text>
               </TouchableOpacity>
             </View>
             <View style={{padding:10}}>
-              <TouchableOpacity style={[styles.containerButton]} onPress={() => alert("it's work")}>
+              <TouchableOpacity style={[styles.containerButton]} onPress={() => this.props.navigation.push("search", { search: "Item ke 11" })}>
                 <FontAwesome5 name={"archive"} size={30} color={"#019cde"} />
                 <Text style={{color:"#019cde",fontSize:15,textAlign:"center",fontWeight:"bold"}}>Item ke 11</Text>
               </TouchableOpacity>
@@ -89,13 +89,13 @@ class Itemlist extends React.Component {
           </View>
           <View>
             <View style={{padding:10}}>
-              <TouchableOpacity style={[styles.containerButton]} onPress={() => alert("it's work")}>
+              <TouchableOpacity style={[styles.containerButton]} onPress={() => this.props.navigation.push("search", { search: "Item ke 6" })}>
                 <FontAwesome5 name={"archive"} size={30} color={"#019cde"} />
                 <Text style={{color:"#019cde",fontSize:15,textAlign:"center",fontWeight:"bold"}}>Item ke 6</Text>
               </TouchableOpacity>
             </View>
             <View style={{padding:10}}>
-              <TouchableOpacity style={[styles.containerButton]} onPress={() => alert("it's work")}>
+              <TouchableOpacity style={[styles.containerButton]} onPress={() => this.props.navigation.push("search", { search: "Item ke 12" })}>
                 <FontAwesome5 name={"archive"} size={30} color={"#019cde"} />
                 <Text style={{color:"#019cde",fontSize:15,textAlign:"center",fontWeight:"bold"}}>Item ke 12</Text>
               </TouchableOpacity>

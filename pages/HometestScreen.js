@@ -53,7 +53,7 @@ class HomeScreen extends React.Component {
                         <Icon name="ios-search" />
                         <Input placeholder="Search" placeholderTextColor={"#019cde"} style={{color:"#019cde"}}/>
                       </TouchableOpacity> */}
-                      <Item style={{backgroundColor:"#ffffff",paddingLeft:10,paddingRight:10,width:"100%",height:"100%"}} onPress={() => this.props.navigation.push("search", { name: "search " })}>
+                      <Item style={{backgroundColor:"#ffffff",paddingLeft:10,paddingRight:10,width:"100%",height:"100%"}} onPress={() => this.props.navigation.push("search", { search: "" })}>
                         <Icon name="ios-search" />
                         <Text style={{color:"#019cde",fontSize:15,textAlign:"center",fontWeight:"bold"}}>Search</Text>
                         {/* <Input placeholder="Search" placeholderTextColor={"#019cde"} style={{color:"#019cde"}}/> */}
@@ -121,7 +121,7 @@ class HomeScreen extends React.Component {
                 </Row>
                 <Row style={{padding:5}}>
                   <Col>
-                    <Itemlist />
+                    <Itemlist navigation={this.props.navigation} />
                   </Col>
                 </Row>
                 <Row style={{padding:5}}>

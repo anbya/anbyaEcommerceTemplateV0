@@ -25,7 +25,7 @@ class Cardlistdua extends React.Component {
         <ScrollView style={{flex:1, flexDirection:'row'}} horizontal={true} showsHorizontalScrollIndicator={false}>
             {this.state.artikelData.length > 0 && this.state.artikelData.map((artikeldata,index) =>
                 <View style={{padding:2}} key={index}>
-                <TouchableOpacity onPress={() => this.props.navigation.push("detailCard", { name: "detailCard " })}>
+                <TouchableOpacity onPress={() => this.props.navigation.push("detailCard", { name: artikeldata })}>
                     <Card style={{width:lebar}} key={index}>
                     <CardItem cardBody>
                         <Image source={{uri: `http://anbyafile.jaygeegroupapp.com/assets/img/detailbg.jpg`}} style={{height: lebar, width: null, flex: 1}}/>
