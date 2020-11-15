@@ -149,7 +149,7 @@ class keranjang extends Component {
                           <Col size={8}>
                             <View style={{flex:1,justifyContent:"center",alignItems:"flex-start",padding:10}}>
                               <Text style={{color:"#000000",fontSize:15,fontWeight:"bold",marginLeft:5}}>xxxxxxxxxxx</Text>
-                              <Text style={{color:"#000000",fontSize:15,marginLeft:5}}>xxxxxxxxxxx</Text>
+                              <Text style={{color:"#000000",fontSize:15,marginLeft:5}}>xxxxxxxxxxxxxx</Text>
                             </View>
                           </Col>
                         </Row>
