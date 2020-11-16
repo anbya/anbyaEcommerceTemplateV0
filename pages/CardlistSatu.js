@@ -5,6 +5,7 @@ import { Text , View , ScrollView , StyleSheet, TouchableOpacity , Image , Dimen
 import { material } from 'react-native-typography'
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import dummyDataCart from "./dummyDataCart";
 import {
     Card,
     CardItem
@@ -14,7 +15,7 @@ class Cardlistsatu extends React.Component {
   constructor(props) {
       super(props);
       this.state = {
-      artikelData: ["Item ke 1","Item ke 2","Item ke 3","Item ke 4","Item ke 5","Item ke 6","Item ke 7","Item ke 8","Item ke 9","Item ke 10"]
+      artikelData: dummyDataCart
       };
   }
   render() {
@@ -24,7 +25,7 @@ class Cardlistsatu extends React.Component {
         <ScrollView style={{flex:1, flexDirection:'row'}} horizontal={true} showsHorizontalScrollIndicator={false}>
             {this.state.artikelData.length > 0 && this.state.artikelData.map((artikeldata,index) =>
                 <View style={{padding:2}} key={index}>
-                <TouchableOpacity onPress={() => this.props.navigation.push("detailCard", { name: artikeldata })}>
+                <TouchableOpacity onPress={() => this.props.navigation.push("detailCard", { name: artikeldata.title,data:artikeldata })}>
                     <Card style={{width:lebar}}>
                     <CardItem cardBody>
                         <Image source={{uri: `http://anbyafile.jaygeegroupapp.com/assets/img/detailbg.jpg`}} style={{height: lebar, width: null, flex: 1}}/>
@@ -35,8 +36,8 @@ class Cardlistsatu extends React.Component {
                     </CardItem>
                     <CardItem cardBody>
                         <View style={{flex: 1,justifyContent: "center",alignItems:"center",padding:2}}>
-                            <Text numberOfLines={1} style={{color:"#000000",fontSize:15}}>{artikeldata}</Text>
-                            <Text style={{color:"#019cde",fontSize:15,fontWeight:"bold"}}>Rp xxx.xxx.xxx</Text>
+                            <Text numberOfLines={1} style={{color:"#000000",fontSize:15}}>{artikeldata.title}</Text>
+                            <Text style={{color:"#019cde",fontSize:15,fontWeight:"bold"}}>Rp {artikeldata.price}</Text>
                         </View>
                     </CardItem>
                     <CardItem cardBody style={{padding:10}}>

@@ -44,6 +44,12 @@ class detailCard extends Component {
     whislsitParameter:false
     };
   } 
+  componentDidMount = ()=> {
+    this.setState({
+      ...this.state,
+      dataDummy:this.props.route.params.data
+    })
+  }
   setSelectedIndex = event => {
     const viewSize = event.nativeEvent.layoutMeasurement.width;
     const contentOffset = event.nativeEvent.contentOffset.x;
@@ -52,6 +58,12 @@ class detailCard extends Component {
       ...this.state,
       selectedIndex:selectedIndex
     })
+  }
+  addToCart = async (data)=> {
+    let cartAwal = this.props.shoppingCartData
+    await cartAwal.push(data)
+    await this.props.dispatch({ type: "ADD_CART", payload: cartAwal });
+    this.props.navigation.push("cart")
   }
   render() {
     const lebar = Dimensions.get("window").width / 2 - 20
@@ -72,12 +84,12 @@ class detailCard extends Component {
                       </View>
                     </View>
                   </Col>
-                  <Col size={7}>
+                  <Col size={9}>
                     <View style={{ flex: 1, justifyContent: "center",alignItems:"flex-start"}}>
-                      <Text numberOfLines={1} style={{color:"#000000",fontSize:20,fontWeight:"bold"}}>{this.props.route.params.name}</Text>
+                      <Text numberOfLines={1} style={{color:"#000000",fontSize:20,fontWeight:"bold"}}>{this.state.dataDummy.title}</Text>
                     </View>
                   </Col>
-                  <Col size={2}>
+                  {/* <Col size={2}>
                     <View style={{ flex: 1, justifyContent: "center",alignItems:"center"}}>
                       <View>
                         <Button transparent onPress={() => alert("it's work")}>
@@ -85,7 +97,7 @@ class detailCard extends Component {
                         </Button>
                       </View>
                     </View>
-                  </Col>
+                  </Col> */}
                 </Row>
               </View>
             </Col>
@@ -144,7 +156,7 @@ class detailCard extends Component {
                         <View style={listStyle.content1}>
                           <Row style={{paddingTop:5,paddingBottom:5}}>
                             <Col size={8}>
-                              <Text style={{color:"#000000",fontSize:20,fontWeight:"bold"}}>Rp. xxx.xxx.xxx</Text>
+                              <Text style={{color:"#000000",fontSize:20,fontWeight:"bold"}}>Rp. {this.state.dataDummy.price}</Text>
                             </Col>
                             <Col size={2}>
                               <View style={{ flex: 1, justifyContent: "center",alignItems:"center",backgroundColor:"#ffffff"}}>
@@ -344,7 +356,7 @@ class detailCard extends Component {
           <Row size={1}>
             <Col>
               <View style={{ flex: 1, justifyContent: "center",alignItems:"center",backgroundColor:"#f5f5f5"}}>
-                <TouchableOpacity style={listStyle.addCart} onPress={() => alert("it's work")}>
+                <TouchableOpacity style={listStyle.addCart} onPress={() => this.addToCart(this.state.dataDummy)}>
                   <View style={{ flex: 1, justifyContent: "center",alignItems:"center",flexDirection:"row"}}>
                     <FontAwesome5 name={"cart-plus"} size={25} color={"#ffffff"} />
                     <Text numberOfLines={1} style={{color:"#ffffff",fontSize:25,fontWeight:"bold"}}> Keranjang</Text>
@@ -437,4 +449,10 @@ const listStyle = StyleSheet.create({
   }
 })
 
-export default detailCard;
+const mapStateToProps = state => {
+  return {
+    shoppingCartData: state.reducer.shoppingCartData
+  };
+};
+
+export default connect(mapStateToProps)(detailCard);

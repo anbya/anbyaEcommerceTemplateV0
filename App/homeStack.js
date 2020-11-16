@@ -144,6 +144,13 @@ export const HomeStackScreen = () => (
         })}
       />
       <HomeStack.Screen
+        name="cart"
+        component={CartTab}
+        options={({ route }) => ({
+          headerShown: false
+        })}
+      />
+      <HomeStack.Screen
         name="Search2"
         component={Search2}
         options={{ 

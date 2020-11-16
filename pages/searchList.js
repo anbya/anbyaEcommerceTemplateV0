@@ -28,7 +28,7 @@ import {
 } from "native-base";
 import { material } from "react-native-typography";
 import { Col, Row, Grid } from "react-native-easy-grid";
-import dataDummy from "./dummyData";
+import dummyDataCart from "./dummyDataCart";
 import Constants from 'expo-constants'
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
@@ -40,7 +40,7 @@ class searchList extends Component {
   constructor(props) {
       super(props);
       this.state = {
-      dataDummy: dataDummy,
+      dataDummy: dummyDataCart,
       dataShow: false,
       optionalState: "",
       searchText: ""
@@ -154,10 +154,10 @@ class searchList extends Component {
               {this.state.dataShow == true &&
                 <View>
                   <FlatList
-                    data={dataDummy}
+                    data={this.state.dataDummy}
                     renderItem={({item}) =>
                       <View style={{margin:6}}>
-                      <TouchableOpacity onPress={() => this.props.navigation.push("detailCard", { name: item.title })}>
+                      <TouchableOpacity onPress={() => this.props.navigation.push("detailCard", { name: item.title,data:item })}>
                           <Card style={{width:lebar}}>
                           <CardItem cardBody>
                               <Image source={{uri: `http://anbyafile.jaygeegroupapp.com/assets/img/detailbg.jpg`}} style={{height: lebar, width: null, flex: 1}}/>
@@ -188,36 +188,6 @@ class searchList extends Component {
                   />
                 </View>
               }
-              {/* {this.state.dataShow == true &&
-                <ScrollView style={{backgroundColor:"#FFFFFF"}}>
-                  <View style={{width:lebar,flexDirection:"row"}}>
-                    {this.state.dataDummy.length > 0 && this.state.dataDummy.map((dataDummy,index) =>
-                      <View style={{margin:6}} key={index}>
-                        <TouchableOpacity onPress={() => this.props.navigation.push("detailCard", { name: "detailCard " })}>
-                          <Card style={{width:lebar}}>
-                          <CardItem cardBody>
-                              <Image source={{uri: `http://anbyafile.jaygeegroupapp.com/assets/img/detailbg.jpg`}} style={{height: lebar, width: null, flex: 1}}/>
-                              <View style={{position:"absolute",top:2,left:2,flex:1,flexDirection:"row",alignItems:"center"}}>
-                                  <View style={{ flex: 1,flexDirection:"row",alignItems:"center"}}>
-                                      <FontAwesome name={"star"} size={15} color={"#019cde"} />
-                                      <Text style={{color:"#000000",fontSize:15,fontWeight:"bold",marginLeft:5}}>x</Text>
-                                  </View>
-                              </View>
-                          </CardItem>
-                          <CardItem cardBody style={{backgroundColor:"#f5f5f5"}}>
-                              <View style={{flex: 1,justifyContent: "center",alignItems:"flex-start",padding:2}}>
-                                  <Text numberOfLines={2} style={{color:"#000000",fontSize:15,fontWeight:"bold"}}>{dataDummy.title}</Text>
-                                  <Text style={{color:"#019cde",fontSize:15,fontWeight:"bold"}}>Rp. xxxx.xxx.xxx</Text>
-                                  <Text style={{color:"#000000",fontSize:13}}>xxx Terjual</Text>
-                              </View>
-                          </CardItem>
-                          </Card>
-                        </TouchableOpacity>
-                      </View>
-                    )}
-                  </View>
-                </ScrollView>
-              } */}
             </Col>
           </Row>
         </Grid>
