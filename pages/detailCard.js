@@ -60,8 +60,20 @@ class detailCard extends Component {
     })
   }
   addToCart = async (data)=> {
+    let prmAddToCart = await this.props.shoppingCartData.findIndex(i => i.id == data.id)
+    console.log(prmAddToCart);
+    prmAddToCart >= 0 ? this.plusQtyCart(prmAddToCart):this.addCart(data)
+  }
+  addCart = async (data)=> {
     let cartAwal = this.props.shoppingCartData
     await cartAwal.push(data)
+    await this.props.dispatch({ type: "ADD_CART", payload: cartAwal });
+    this.props.navigation.push("cart")
+  }
+  plusQtyCart = async (index)=> {
+    let cartAwal = this.props.shoppingCartData
+    console.log(cartAwal[index].qty);
+    cartAwal[index].qty=cartAwal[index].qty+1
     await this.props.dispatch({ type: "ADD_CART", payload: cartAwal });
     this.props.navigation.push("cart")
   }

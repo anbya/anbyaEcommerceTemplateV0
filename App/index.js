@@ -9,8 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Button, StatusBar } from 'react-native';
 import { Provider } from "react-redux";
 import store from "../redux/store";
-
-
+import Splash from "./splash";
 import HometestScreen from '../pages/HometestScreen';
 import HomeAuth from './home';
 import Signpage from './signInScreen';
@@ -23,8 +22,7 @@ import {
   Home,
   Details,
   Search2,
-  Profile,
-  Splash
+  Profile
 } from "./Screens";
 
 const AuthStack = createStackNavigator();
@@ -155,35 +153,6 @@ const RootStackScreen = ({ userToken }) => (
   </RootStack.Navigator>
 );
 export default () => {
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [userToken, setUserToken] = React.useState(null);
-
-  const authContext = React.useMemo(() => {
-    return {
-      signIn: () => {
-        setIsLoading(false);
-        setUserToken("asdf");
-      },
-      signUp: () => {
-        setIsLoading(false);
-        setUserToken("asdf");
-      },
-      signOut: () => {
-        setIsLoading(false);
-        setUserToken(null);
-      }
-    };
-  }, []);
-
-  React.useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, []);
-
-  if (isLoading) {
-    return <Splash />;
-  }
 
   return (
     <Provider store={store}>

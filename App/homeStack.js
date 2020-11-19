@@ -13,6 +13,7 @@ import Notification from '../pages/notification';
 import SearchList from '../pages/searchList';
 import OfferTab from '../pages/offerTab';
 import CartTab from '../pages/cartTab';
+import CartStack from '../pages/cartStack';
 import DetailCard from '../pages/detailCard';
 import {
     SignIn,
