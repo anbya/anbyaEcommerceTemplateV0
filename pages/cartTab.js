@@ -25,10 +25,19 @@ import {
   ListItem,
   Radio
 } from "native-base";
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator
+} from "react-native-indicators";
 import { material } from "react-native-typography";
 import { Col, Row, Grid } from "react-native-easy-grid";
-import dataDummy from "./dummyData";
-import dataDummyCart from "./dummyDataCart";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -40,12 +49,12 @@ class keranjang extends Component {
   constructor(props) {
     super(props);
     this.state = {
-    dataDummy: dataDummy,
-    dataDummyCart:this.props.shoppingCartData,
-    selectedIndex:0,
-    whislsitParameter:false,
-    cartData:[],
-    checkData:[]
+      loadingState:true,
+      dataDummyCart:[],
+      selectedIndex:0,
+      whislsitParameter:false,
+      cartData:[],
+      checkData:[]
     };
   }
   componentDidMount = ()=> {
@@ -58,10 +67,10 @@ class keranjang extends Component {
     this._unsubscribe();
   }
   refreshScreen = ()=> {
-    let dataDummyCartFiltered=this.state.dataDummyCart.filter((v,i,a)=>a.findIndex(t=>(t.toko === v.toko))===i)
+    let dataDummyCartFiltered=this.props.shoppingCartData.filter((v,i,a)=>a.findIndex(t=>(t.toko === v.toko))===i)
     let newDataCart = []
     for (let i2=0;i2<dataDummyCartFiltered.length;i2++) {
-      let dataToshow =  this.state.dataDummyCart.filter(function(data) {
+      let dataToshow =  this.props.shoppingCartData.filter(function(data) {
         return data.toko == dataDummyCartFiltered[i2].toko;
       });
       let dataPushTemp=[]
@@ -81,6 +90,7 @@ class keranjang extends Component {
     }
     this.setState({
       ...this.state,
+      loadingState:false,
       cartData:newDataCart
     })
   }
@@ -131,7 +141,7 @@ class keranjang extends Component {
     })
   }
   pushToCheckDataAll = ()=> {
-    let dataAll = this.state.dataDummyCart
+    let dataAll = this.props.shoppingCartData
     if(this.state.checkData.length == dataAll.length){
       this.removeCheckDataAll()
     } else {
@@ -149,24 +159,54 @@ class keranjang extends Component {
       checkData:[]
     })
   }
-  addQty = (x1,x2)=> {
-    let cartData = this.state.cartData
-    let qtyAwal = this.state.cartData[x1][x2].qty
-    cartData[x1][x2].qty = qtyAwal+1
-    this.setState({
+  addQty = async (index1,index2)=> {
+    let cartAwal1 = this.state.cartData
+    cartAwal1[index1][index2].qty=cartAwal1[index1][index2].qty+1
+    let newDataCart1 = []
+    for (let i4=0;i4<cartAwal1.length;i4++) {
+      for(let i5=0;i5<cartAwal1[i4].length;i5++){
+        newDataCart1.push({
+          "id": cartAwal1[i4][i5].id,
+          "toko": cartAwal1[i4][i5].toko,
+          "title": cartAwal1[i4][i5].title,
+          "subTitle": cartAwal1[i4][i5].subTitle,
+          "body_text": cartAwal1[i4][i5].body_text,
+          "price": cartAwal1[i4][i5].price,
+          "qty": cartAwal1[i4][i5].qty
+        })
+      }
+    }
+    await this.props.dispatch({ type: "ADD_CART", payload: newDataCart1 })
+    await this.setState({
       ...this.state,
-      cartData:cartData
+      loadingState:true
     })
+    this.refreshScreen()
   }
-  minQty = (x1,x2)=> {
-    if(this.state.cartData[x1][x2].qty > 1){
-      let cartData = this.state.cartData
-      let qtyAwal = this.state.cartData[x1][x2].qty
-      cartData[x1][x2].qty = qtyAwal-1
-      this.setState({
+  minQty = async (index1,index2)=> {
+    let cartAwal2 = this.state.cartData
+    if(cartAwal2[index1][index2].qty > 1){
+      cartAwal2[index1][index2].qty=cartAwal2[index1][index2].qty-1
+      let newDataCart2 = []
+      for (let i6=0;i6<cartAwal2.length;i6++) {
+        for(let i7=0;i7<cartAwal2[i6].length;i7++){
+          newDataCart2.push({
+            "id": cartAwal2[i6][i7].id,
+            "toko": cartAwal2[i6][i7].toko,
+            "title": cartAwal2[i6][i7].title,
+            "subTitle": cartAwal2[i6][i7].subTitle,
+            "body_text": cartAwal2[i6][i7].body_text,
+            "price": cartAwal2[i6][i7].price,
+            "qty": cartAwal2[i6][i7].qty
+          })
+        }
+      }
+      await this.props.dispatch({ type: "ADD_CART", payload: newDataCart2 });
+      await this.setState({
         ...this.state,
-        cartData:cartData
+        loadingState:true
       })
+      this.refreshScreen()
     } else{
       alert("qty tidak bisa kurang dari 1")
     }
@@ -180,199 +220,260 @@ class keranjang extends Component {
       selectedIndex:selectedIndex
     })
   }
+  removeFromcart = async (datax)=> {
+    let checkData = this.state.cartData
+    let newDataCart3 = []
+    for (let i8=0;i8<checkData.length;i8++) {
+      for(let i9=0;i9<checkData[i8].length;i9++){
+        newDataCart3.push({
+          "id": checkData[i8][i9].id,
+          "toko": checkData[i8][i9].toko,
+          "title": checkData[i8][i9].title,
+          "subTitle": checkData[i8][i9].subTitle,
+          "body_text": checkData[i8][i9].body_text,
+          "price": checkData[i8][i9].price,
+          "qty": checkData[i8][i9].qty
+        })
+      }
+    }
+    let endData =  newDataCart3.filter(function(data) {
+      return data.id != datax.id;
+    });
+    await this.props.dispatch({ type: "ADD_CART", payload: endData });
+    await this.setState({
+      ...this.state,
+      loadingState:true
+    })
+    this.refreshScreen()
+  }
   render() {
     const lebar = Dimensions.get("window").width
     const tinggi = Dimensions.get("window").height
     const tinggi5 = Dimensions.get("window").height*5/100
     const tinggi10 = Dimensions.get("window").height*10/100
     const { selectedIndex } = this.state
-    return (
-      <Container style={{paddingTop: Constants.statusBarHeight}}>
-        <Grid>
-          <Row size={1}>
-            <Col>
-              <View style={{ flex: 1, justifyContent: "center",alignItems:"center",backgroundColor:"#ffffff" }}>
-                <Row>
-                  <Col size={1}>
-                    <View style={{ flex: 1, justifyContent: "center",alignItems:"center"}}>
-                      <View>
-                        <Button transparent onPress={() => this.props.navigation.goBack()}>
-                          <MaterialCommunityIcons name={"arrow-left"} size={25} color={"#000000"} />
-                        </Button>
+    if(this.state.loadingState==true){
+      return (
+        <Container style={{paddingTop: Constants.statusBarHeight}}>
+          <Grid>
+            <Row size={1}>
+              <Col>
+                <View style={{ flex: 1, justifyContent: "center",alignItems:"center",backgroundColor:"#ffffff" }}>
+                  <Row>
+                    <Col size={1}>
+                      <View style={{ flex: 1, justifyContent: "center",alignItems:"center"}}>
+                        <View>
+                          <Button transparent onPress={() => this.props.navigation.goBack()}>
+                            <MaterialCommunityIcons name={"arrow-left"} size={25} color={"#000000"} />
+                          </Button>
+                        </View>
                       </View>
-                    </View>
-                  </Col>
-                  <Col size={9}>
-                    <View style={{ flex: 1, justifyContent: "center",alignItems:"flex-start"}}>
-                      <Text numberOfLines={1} style={{color:"#000000",fontSize:20,fontWeight:"bold"}}>Keranjang</Text>
-                    </View>
-                  </Col>
-                </Row>
-              </View>
-            </Col>
-          </Row>
-          <Row size={8}>
-            <Col>
-              {this.state.dataDummyCart.length>0&&
-              <ScrollView style={{paddingLeft:0,backgroundColor:"#f5f5f5"}}>
-                <TouchableOpacity
-                  onPress={() => this.pushToCheckDataAll()}
-                >
-                  <View style={listStyle.content2}>
-                    <Row style={{paddingTop:10,paddingBottom:10}}>
-                      <Col size={1}>
-                        <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-                          <MaterialCommunityIcons
-                            name={
-                              this.state.checkData.length == this.state.dataDummyCart.length?"checkbox-marked":"checkbox-blank-outline"
-                            }
-                            // name={"checkbox-blank-outline"}
-                            size={25}
-                            color={"#019cde"}
-                          />
+                    </Col>
+                    <Col size={9}>
+                      <View style={{ flex: 1, justifyContent: "center",alignItems:"flex-start"}}>
+                        <Text numberOfLines={1} style={{color:"#000000",fontSize:20,fontWeight:"bold"}}>Keranjang</Text>
+                      </View>
+                    </Col>
+                  </Row>
+                </View>
+              </Col>
+            </Row>
+            <Row size={9}>
+              <Col>
+                <View style={{ flex: 1, justifyContent: "center",alignItems:"center",backgroundColor:"#f5f5f5"}}>
+                  <WaveIndicator color="#019cde" size={100} />
+                </View>
+              </Col>
+            </Row>
+          </Grid>
+        </Container>
+      );
+    } else {
+      return (
+        <Container style={{paddingTop: Constants.statusBarHeight}}>
+          <Grid>
+            <Row size={1}>
+              <Col>
+                <View style={{ flex: 1, justifyContent: "center",alignItems:"center",backgroundColor:"#ffffff" }}>
+                  <Row>
+                    <Col size={1}>
+                      <View style={{ flex: 1, justifyContent: "center",alignItems:"center"}}>
+                        <View>
+                          <Button transparent onPress={() => this.props.navigation.goBack()}>
+                            <MaterialCommunityIcons name={"arrow-left"} size={25} color={"#000000"} />
+                          </Button>
                         </View>
-                      </Col>
-                      <Col size={9}>
-                        <View style={{flex:1,justifyContent:"center",alignItems:"flex-start"}}>
-                          <Text style={{color:"#000000",fontSize:15,fontWeight:"bold",marginLeft:5}}>Pilih semua barang</Text>
-                        </View>
-                      </Col>
-                    </Row>
-                  </View>
-                </TouchableOpacity>
-                {this.state.cartData.length > 0 && this.state.cartData.map((cartData1,index1) =>
-                  <View style={listStyle.content2} key={index1}>
-                    <Row style={{paddingTop:10,paddingBottom:10}}>
-                      <Col>
-                        <TouchableOpacity
-                          onPress={() => this.pushToCheckDataToko(cartData1)}
-                        >
-                          <View>
-                            <Row>
-                              <Col size={1}>
-                                <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-                                  <MaterialCommunityIcons
-                                    name={
-                                      this.state.checkData.filter((obj) => obj.toko === cartData1[0].toko).length == cartData1.length?"checkbox-marked":"checkbox-blank-outline"
-                                    }
-                                    size={25}
-                                    color={"#019cde"}
-                                    // name={"checkbox-blank-outline"} size={25} color={"#019cde"}
-                                  />
-                                </View>
-                              </Col>
-                              <Col size={9}>
-                                <View style={{flex:1,justifyContent:"center",alignItems:"flex-start"}}>
-                                  <Text style={{color:"#000000",fontSize:15,fontWeight:"bold",marginLeft:5}}>{cartData1[0].toko}</Text>
-                                  <Text style={{color:"#000000",fontSize:15,marginLeft:5}}>{cartData1[0].title}</Text>
-                                </View>
-                              </Col>
-                            </Row>
+                      </View>
+                    </Col>
+                    <Col size={9}>
+                      <View style={{ flex: 1, justifyContent: "center",alignItems:"flex-start"}}>
+                        <Text numberOfLines={1} style={{color:"#000000",fontSize:20,fontWeight:"bold"}}>Keranjang</Text>
+                      </View>
+                    </Col>
+                  </Row>
+                </View>
+              </Col>
+            </Row>
+            <Row size={8}>
+              <Col>
+                {this.state.cartData.length>0&&
+                <ScrollView style={{paddingLeft:0,backgroundColor:"#f5f5f5"}}>
+                  <TouchableOpacity
+                    onPress={() => this.pushToCheckDataAll()}
+                  >
+                    <View style={listStyle.content2}>
+                      <Row style={{paddingTop:10,paddingBottom:10}}>
+                        <Col size={1}>
+                          <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+                            <MaterialCommunityIcons
+                              name={
+                                this.state.checkData.length == this.state.cartData.length?"checkbox-marked":"checkbox-blank-outline"
+                              }
+                              // name={"checkbox-blank-outline"}
+                              size={25}
+                              color={"#019cde"}
+                            />
                           </View>
-                        </TouchableOpacity>
-                      </Col>
-                    </Row>
-                    {this.state.cartData[index1].length > 0 && this.state.cartData[index1].map((cartData2,index2) =>
-                    <Row key={index2}>
-                      <Col>
-                        <Row style={{paddingTop:10,paddingBottom:10}}>
-                          <Col size={1}>
-                            <TouchableOpacity
-                              onPress={() => this.pushToCheckData(cartData2)}
-                            >
-                              <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-                                <MaterialCommunityIcons
-                                  name={
-                                    this.state.checkData.findIndex(i => i.id == cartData2.id) >= 0?"checkbox-marked":"checkbox-blank-outline"
-                                  }
-                                  size={25}
-                                  color={"#019cde"}
-                                />
-                              </View>
-                            </TouchableOpacity>
-                          </Col>
-                          <Col size={9}>
-                            <TouchableOpacity
-                              onPress={() => this.props.navigation.push("detailCard", { name: cartData2.title,data:cartData2 })}
-                            >
+                        </Col>
+                        <Col size={9}>
+                          <View style={{flex:1,justifyContent:"center",alignItems:"flex-start"}}>
+                            <Text style={{color:"#000000",fontSize:15,fontWeight:"bold",marginLeft:5}}>Pilih semua barang</Text>
+                          </View>
+                        </Col>
+                      </Row>
+                    </View>
+                  </TouchableOpacity>
+                  {this.state.cartData.length > 0 && this.state.cartData.map((cartData1,index1) =>
+                    <View style={listStyle.content2} key={index1}>
+                      <Row style={{paddingTop:10,paddingBottom:10}}>
+                        <Col>
+                          <TouchableOpacity
+                            onPress={() => this.pushToCheckDataToko(cartData1)}
+                          >
+                            <View>
                               <Row>
-                                <Col size={2}>
-                                  <View style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
-                                    <Image
-                                      source={{
-                                      uri: `https://via.placeholder.com/75`
-                                      }}
-                                      style={{ height: 75, width: 75,marginLeft:5}}
+                                <Col size={1}>
+                                  <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+                                    <MaterialCommunityIcons
+                                      name={
+                                        this.state.checkData.filter((obj) => obj.toko === cartData1[0].toko).length == cartData1.length?"checkbox-marked":"checkbox-blank-outline"
+                                      }
+                                      size={25}
+                                      color={"#019cde"}
+                                      // name={"checkbox-blank-outline"} size={25} color={"#019cde"}
                                     />
                                   </View>
                                 </Col>
-                                <Col size={8}>
-                                  <View style={{flex:1,justifyContent:"center",alignItems:"flex-start",padding:10}}>
-                                    <Text style={{color:"#000000",fontSize:15,fontWeight:"bold",marginLeft:5}}>{cartData2.title}</Text>
-                                    <Text style={{color:"#000000",fontSize:15,marginLeft:5}}>{cartData2.price}</Text>
+                                <Col size={9}>
+                                  <View style={{flex:1,justifyContent:"center",alignItems:"flex-start"}}>
+                                    <Text style={{color:"#000000",fontSize:15,fontWeight:"bold",marginLeft:5}}>{cartData1[0].toko}</Text>
+                                    <Text style={{color:"#000000",fontSize:15,marginLeft:5}}>{cartData1[0].title}</Text>
                                   </View>
                                 </Col>
                               </Row>
-                            </TouchableOpacity>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col>
-                            <View style={{display:"flex",flexDirection:"row",justifyContent:"center",alignItems:"center"}}>
-                              <TouchableOpacity>
-                                <View style={{display:"flex",justifyContent:"center",alignItems:"center",marginLeft:10,marginRight:10}}>
-                                  <MaterialCommunityIcons name={"heart"} size={35} color={"#019cde"} />
-                                </View>
-                              </TouchableOpacity>
-                              <TouchableOpacity>
-                                <View style={{display:"flex",justifyContent:"center",alignItems:"center",marginLeft:10,marginRight:10}}>
-                                  <MaterialCommunityIcons name={"trash-can"} size={35} color={"#019cde"} />
-                                </View>
-                              </TouchableOpacity>
-                              <TouchableOpacity
-                                onPress={() => this.minQty(index1,index2)}
-                              >
-                                <View style={{display:"flex",justifyContent:"center",alignItems:"center",marginLeft:10,marginRight:10}}>
-                                  <MaterialCommunityIcons name={"minus-box"} size={35} color={"#019cde"} />
-                                </View>
-                              </TouchableOpacity>
-                              <View style={{display:"flex",justifyContent:"center",alignItems:"center",marginLeft:10,marginRight:10}}>
-                                <Text style={{color:"#000000",fontSize:25}}>{cartData2.qty}</Text>
-                              </View>
-                              <TouchableOpacity
-                                onPress={() => this.addQty(index1,index2)}
-                              >
-                                <View style={{display:"flex",justifyContent:"center",alignItems:"center",marginLeft:10,marginRight:10}}>
-                                  <MaterialCommunityIcons name={"plus-box"} size={35} color={"#019cde"} />
-                                </View>
-                              </TouchableOpacity>
                             </View>
-                          </Col>
-                        </Row>
-                      </Col>
-                    </Row>
-                    )}
-                  </View>
-                )}
-              </ScrollView>
-              }
-            </Col>
-          </Row>
-          <Row size={1}>
-            <Col>
-              <View style={{ flex: 1, justifyContent: "center",alignItems:"center",backgroundColor:"#f5f5f5"}}>
-                <TouchableOpacity style={listStyle.addCart} onPress={() => alert("it's work")}>
-                  <View style={{ flex: 1, justifyContent: "center",alignItems:"center",flexDirection:"row"}}>
-                    <FontAwesome5 name={"cart-plus"} size={25} color={"#ffffff"} />
-                    <Text numberOfLines={1} style={{color:"#ffffff",fontSize:25,fontWeight:"bold"}}> Keranjang</Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-            </Col>
-          </Row>
-        </Grid>
-      </Container>
-    );
+                          </TouchableOpacity>
+                        </Col>
+                      </Row>
+                      {this.state.cartData[index1].length > 0 && this.state.cartData[index1].map((cartData2,index2) =>
+                      <Row key={index2}>
+                        <Col>
+                          <Row style={{paddingTop:10,paddingBottom:10}}>
+                            <Col size={1}>
+                              <TouchableOpacity
+                                onPress={() => this.pushToCheckData(cartData2)}
+                              >
+                                <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+                                  <MaterialCommunityIcons
+                                    name={
+                                      this.state.checkData.findIndex(i => i.id == cartData2.id) >= 0?"checkbox-marked":"checkbox-blank-outline"
+                                    }
+                                    size={25}
+                                    color={"#019cde"}
+                                  />
+                                </View>
+                              </TouchableOpacity>
+                            </Col>
+                            <Col size={9}>
+                              <TouchableOpacity
+                                onPress={() => this.props.navigation.push("detailCard", { name: cartData2.title})}
+                              >
+                                <Row>
+                                  <Col size={2}>
+                                    <View style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
+                                      <Image
+                                        source={{
+                                        uri: `https://via.placeholder.com/75`
+                                        }}
+                                        style={{ height: 75, width: 75,marginLeft:5}}
+                                      />
+                                    </View>
+                                  </Col>
+                                  <Col size={8}>
+                                    <View style={{flex:1,justifyContent:"center",alignItems:"flex-start",padding:10}}>
+                                      <Text style={{color:"#000000",fontSize:15,fontWeight:"bold",marginLeft:5}}>{cartData2.title}</Text>
+                                      <Text style={{color:"#000000",fontSize:15,marginLeft:5}}>{cartData2.price}</Text>
+                                    </View>
+                                  </Col>
+                                </Row>
+                              </TouchableOpacity>
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col>
+                              <View style={{display:"flex",flexDirection:"row",justifyContent:"center",alignItems:"center"}}>
+                                <TouchableOpacity
+                                  onPress={() => this.removeFromcart(cartData2)}
+                                >
+                                  <View style={{display:"flex",justifyContent:"center",alignItems:"center",marginLeft:10,marginRight:10}}>
+                                    <MaterialCommunityIcons name={"trash-can"} size={35} color={"#019cde"} />
+                                  </View>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                  onPress={() => this.minQty(index1,index2)}
+                                >
+                                  <View style={{display:"flex",justifyContent:"center",alignItems:"center",marginLeft:10,marginRight:10}}>
+                                    <MaterialCommunityIcons name={"minus-box"} size={35} color={"#019cde"} />
+                                  </View>
+                                </TouchableOpacity>
+                                <View style={{display:"flex",justifyContent:"center",alignItems:"center",marginLeft:10,marginRight:10}}>
+                                  <Text style={{color:"#000000",fontSize:25}}>{cartData2.qty}</Text>
+                                </View>
+                                <TouchableOpacity
+                                  onPress={() => this.addQty(index1,index2)}
+                                >
+                                  <View style={{display:"flex",justifyContent:"center",alignItems:"center",marginLeft:10,marginRight:10}}>
+                                    <MaterialCommunityIcons name={"plus-box"} size={35} color={"#019cde"} />
+                                  </View>
+                                </TouchableOpacity>
+                              </View>
+                            </Col>
+                          </Row>
+                        </Col>
+                      </Row>
+                      )}
+                    </View>
+                  )}
+                </ScrollView>
+                }
+              </Col>
+            </Row>
+            <Row size={1}>
+              <Col>
+                <View style={{ flex: 1, justifyContent: "center",alignItems:"center",backgroundColor:"#f5f5f5"}}>
+                  <TouchableOpacity style={listStyle.addCart} onPress={() => alert("it's work")}>
+                    <View style={{ flex: 1, justifyContent: "center",alignItems:"center",flexDirection:"row"}}>
+                      <FontAwesome5 name={"cart-plus"} size={25} color={"#ffffff"} />
+                      <Text numberOfLines={1} style={{color:"#ffffff",fontSize:25,fontWeight:"bold"}}> Keranjang</Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              </Col>
+            </Row>
+          </Grid>
+        </Container>
+      );
+    }
   }
 }
 const listStyle = StyleSheet.create({

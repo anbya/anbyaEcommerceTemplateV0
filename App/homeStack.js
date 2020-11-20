@@ -91,9 +91,6 @@ export const HomeStackScreen = () => (
         options={{ 
           headerShown: false
         }}
-        options={({ route }) => ({
-          headerShown: false
-        })}
       />
       <HomeStack.Screen
         name="whislist"
@@ -147,9 +144,9 @@ export const HomeStackScreen = () => (
       <HomeStack.Screen
         name="cart"
         component={CartTab}
-        options={({ route }) => ({
+        options={{ 
           headerShown: false
-        })}
+        }}
       />
       <HomeStack.Screen
         name="Search2"

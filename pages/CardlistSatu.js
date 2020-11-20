@@ -1,31 +1,42 @@
 //This is an example code for Bottom Navigation//
 import React from 'react';
+import { connect } from "react-redux";
 //import react in our code.
 import { Text , View , ScrollView , StyleSheet, TouchableOpacity , Image , Dimensions } from 'react-native'
 import { material } from 'react-native-typography'
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
-import dummyDataCart from "./dummyDataCart";
 import {
     Card,
     CardItem
   } from "native-base";
+  import DUMMYDATACART from "./dummyDataCart";
 //import all the basic component we have used
 class Cardlistsatu extends React.Component {
-  constructor(props) {
+    constructor(props) {
       super(props);
       this.state = {
-      artikelData: dummyDataCart
+      dataDummy: "",
       };
-  }
+    } 
+    componentDidMount = ()=> {
+        let dataDummy = DUMMYDATACART
+        this.setState({
+          ...this.state,
+          dataDummy:dataDummy
+        })
+    }
+    toDetail = (data1)=> {
+      this.props.navigation.navigate("detailCard", { name: data1.title,data:data1 })
+    }
   render() {
       const lebar = Dimensions.get("window").width / 3
       const testLebar = 50
     return (
         <ScrollView style={{flex:1, flexDirection:'row'}} horizontal={true} showsHorizontalScrollIndicator={false}>
-            {this.state.artikelData.length > 0 && this.state.artikelData.map((artikeldata,index) =>
+            {this.state.dataDummy.length > 0 && this.state.dataDummy.map((artikeldata,index) =>
                 <View style={{padding:2}} key={index}>
-                <TouchableOpacity onPress={() => this.props.navigation.push("detailCard", { name: artikeldata.title,data:artikeldata })}>
+                <TouchableOpacity onPress={() => this.toDetail(artikeldata)}>
                     <Card style={{width:lebar}}>
                     <CardItem cardBody>
                         <Image source={{uri: `http://anbyafile.jaygeegroupapp.com/assets/img/detailbg.jpg`}} style={{height: lebar, width: null, flex: 1}}/>
@@ -36,7 +47,7 @@ class Cardlistsatu extends React.Component {
                     </CardItem>
                     <CardItem cardBody>
                         <View style={{flex: 1,justifyContent: "center",alignItems:"center",padding:2}}>
-                            <Text numberOfLines={1} style={{color:"#000000",fontSize:15}}>{artikeldata.title}</Text>
+                            <Text numberOfLines={1} style={{color:"#000000",fontSize:15}}>{artikeldata.qty}={artikeldata.title}</Text>
                             <Text style={{color:"#019cde",fontSize:15,fontWeight:"bold"}}>Rp {artikeldata.price}</Text>
                         </View>
                     </CardItem>
@@ -69,4 +80,5 @@ const styles = StyleSheet.create({
       paddingBottom:10
     }
 })
+  
 export default Cardlistsatu;

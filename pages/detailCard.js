@@ -39,15 +39,19 @@ class detailCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-    dataDummy: dataDummy,
+    dataDummy: "",
+    dataCart: [],
     selectedIndex:0,
     whislsitParameter:false
     };
   } 
   componentDidMount = ()=> {
+    let DATADUMMY = this.props.route.params.data
+    let DATACART = this.props.shoppingCartData
     this.setState({
       ...this.state,
-      dataDummy:this.props.route.params.data
+      dataDummy:DATADUMMY,
+      dataCart:DATACART
     })
   }
   setSelectedIndex = event => {
@@ -59,23 +63,19 @@ class detailCard extends Component {
       selectedIndex:selectedIndex
     })
   }
-  addToCart = async (data)=> {
-    let prmAddToCart = await this.props.shoppingCartData.findIndex(i => i.id == data.id)
-    console.log(prmAddToCart);
-    prmAddToCart >= 0 ? this.plusQtyCart(prmAddToCart):this.addCart(data)
+  addToCart = (data)=> {
+    let prmAddToCart = this.state.dataCart.findIndex(i => i.id == data.id)
+    prmAddToCart == -1 ?this.addCart(data):this.plusQtyCart(prmAddToCart)
   }
-  addCart = async (data)=> {
-    let cartAwal = this.props.shoppingCartData
-    await cartAwal.push(data)
-    await this.props.dispatch({ type: "ADD_CART", payload: cartAwal });
-    this.props.navigation.push("cart")
+  addCart = (data)=> {
+    let cartAwal = this.state.dataCart
+    cartAwal.push(data)
+    this.props.dispatch({ type: "ADD_CART", payload: cartAwal });
+    this.props.navigation.navigate("cart")
   }
-  plusQtyCart = async (index)=> {
-    let cartAwal = this.props.shoppingCartData
-    console.log(cartAwal[index].qty);
-    cartAwal[index].qty=cartAwal[index].qty+1
-    await this.props.dispatch({ type: "ADD_CART", payload: cartAwal });
-    this.props.navigation.push("cart")
+  plusQtyCart = ()=> {
+    alert("This product is already in your cart")
+    this.props.navigation.navigate("cart")
   }
   render() {
     const lebar = Dimensions.get("window").width / 2 - 20
@@ -98,18 +98,9 @@ class detailCard extends Component {
                   </Col>
                   <Col size={9}>
                     <View style={{ flex: 1, justifyContent: "center",alignItems:"flex-start"}}>
-                      <Text numberOfLines={1} style={{color:"#000000",fontSize:20,fontWeight:"bold"}}>{this.state.dataDummy.title}</Text>
+                      <Text numberOfLines={1} style={{color:"#000000",fontSize:20,fontWeight:"bold"}}>{this.state.dataDummy.qty}={this.state.dataDummy.title}</Text>
                     </View>
                   </Col>
-                  {/* <Col size={2}>
-                    <View style={{ flex: 1, justifyContent: "center",alignItems:"center"}}>
-                      <View>
-                        <Button transparent onPress={() => alert("it's work")}>
-                          <FontAwesome5 name={"shopping-cart"} size={25} color={"#019cde"} />
-                        </Button>
-                      </View>
-                    </View>
-                  </Col> */}
                 </Row>
               </View>
             </Col>
@@ -186,7 +177,7 @@ class detailCard extends Component {
                           </Row>
                           <Row style={{paddingTop:5,paddingBottom:5}}>
                             <Col>
-                              <Text style={{color:"#000000",fontSize:15}}>{this.props.route.params.name}</Text>
+                              <Text style={{color:"#000000",fontSize:15}}>{this.state.dataDummy.name}</Text>
                             </Col>
                           </Row>
                           <Row style={{paddingTop:5,paddingBottom:5}}>
