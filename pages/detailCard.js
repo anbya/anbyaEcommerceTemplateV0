@@ -74,6 +74,9 @@ class detailCard extends Component {
     this.props.navigation.navigate("cart")
   }
   plusQtyCart = ()=> {
+    // let cartAwal = this.state.dataCart
+    // cartAwal[index].qty=cartAwal[index].qty+1
+    // this.props.dispatch({ type: "ADD_CART", payload: cartAwal });
     alert("This product is already in your cart")
     this.props.navigation.navigate("cart")
   }
@@ -98,7 +101,7 @@ class detailCard extends Component {
                   </Col>
                   <Col size={9}>
                     <View style={{ flex: 1, justifyContent: "center",alignItems:"flex-start"}}>
-                      <Text numberOfLines={1} style={{color:"#000000",fontSize:20,fontWeight:"bold"}}>{this.state.dataDummy.qty}={this.state.dataDummy.title}</Text>
+                      <Text numberOfLines={1} style={{color:"#000000",fontSize:20,fontWeight:"bold"}}>{this.state.dataDummy.title}</Text>
                     </View>
                   </Col>
                 </Row>
